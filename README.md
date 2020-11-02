@@ -38,3 +38,7 @@ https://www.acmicpc.net/step/4
 ### CS(Computer Science) 자료
 
 - http://www.kocw.net/home/search/kemView.do?kemId=1046323
+
+### Clean Code
+
+- https://velog.io/@kskim/%ED%95%A8%EC%88%98%EC%9D%98-%EB%8B%A8%EC%9D%BC-%EC%B1%85%EC%9E%84-%EC%A1%B0%EA%B1%B4%EC%9D%84-%EC%B6%A9%EC%A1%B1%EC%8B%9C%EC%BC%9C%EB%9D%BC-else%EB%AC%B8%EC%9D%84-%EB%B0%B0%EC%A0%9C%ED%95%B4%EB%9D%BC
