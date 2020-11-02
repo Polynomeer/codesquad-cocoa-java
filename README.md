@@ -34,9 +34,9 @@ https://www.acmicpc.net/step/4
 
 ### Git
 
-https://rogerdudler.github.io/git-guide/index.ko.html
-https://github.com/jeonghwan-kim/git-usage
-https://dataitgirls2.github.io/tutorial/Tutorial_180628_Git_and_Github.html
+- https://rogerdudler.github.io/git-guide/index.ko.html
+- https://github.com/jeonghwan-kim/git-usage
+- https://dataitgirls2.github.io/tutorial/Tutorial_180628_Git_and_Github.html
 
 ### 마크다운 문법
 
