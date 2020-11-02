@@ -28,6 +28,16 @@ https://www.acmicpc.net/step/4
 
 ## 참고링크
 
+### Intelli J
+
+- System.out.println() : https://stackoverflow.com/questions/3320764/how-to-make-system-out-println-shorter
+
+### Git
+
+https://rogerdudler.github.io/git-guide/index.ko.html
+https://github.com/jeonghwan-kim/git-usage
+https://dataitgirls2.github.io/tutorial/Tutorial_180628_Git_and_Github.html
+
 ### 마크다운 문법
 
 - https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/basic-writing-and-formatting-syntax
