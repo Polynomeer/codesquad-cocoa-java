@@ -3,7 +3,7 @@
  *
  * @author Polynomeer
  * @version 1.0, 1st solved BOJ.1330
- * @caution 클래스 이름을 Main으로 변경 후 채점 가
+ * @caution 클래스 이름을 Main으로 변경 후 채점 가능
  */
 package bjs.cocoa.codesquad;
 
