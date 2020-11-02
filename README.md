@@ -1,4 +1,4 @@
-# codesquad-cocoa-java
+# CodeSquad Masters Cocoa Java Practice
 
 ## 미션 1
 
