@@ -31,6 +31,7 @@ https://www.acmicpc.net/step/4
 ### Intelli J
 
 - System.out.println() : https://stackoverflow.com/questions/3320764/how-to-make-system-out-println-shorter
+- 유용한 단축키 : https://gmlwjd9405.github.io/2019/05/21/intellij-shortkey.html
 
 ### Git
 
