@@ -32,7 +32,7 @@ https://www.acmicpc.net/step/4
 
 - System.out.println() : https://stackoverflow.com/questions/3320764/how-to-make-system-out-println-shorter
 - 유용한 단축키 : https://gmlwjd9405.github.io/2019/05/21/intellij-shortkey.html
-
+- 패키지 명명 시 주의사항 : https://humility.tistory.com/entry/Package-%EC%84%A0%EC%96%B8%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD
 ### Git
 
 - https://rogerdudler.github.io/git-guide/index.ko.html
