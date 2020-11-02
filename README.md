@@ -34,3 +34,7 @@ https://www.acmicpc.net/step/4
 - https://hack-jam.tistory.com/26
 - https://velog.io/@yuuuye/velog-%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4MarkDown-%EC%9E%91%EC%84%B1%EB%B2%95
 - https://gist.github.com/ihoneymon/652be052a0727ad59601
+
+### CS(Computer Science) 자료
+
+- http://www.kocw.net/home/search/kemView.do?kemId=1046323
