@@ -46,7 +46,7 @@ public class Character {
     }
 
     public void moveDown() {
-        if (this.x + 1 >= 11) {
+        if (this.x + 1 >= Map.MAP_SIZE) {
             System.out.println("Unable to move down");
             return;
         }
@@ -54,7 +54,7 @@ public class Character {
     }
 
     public void moveRight() {
-        if (y + 1 >= 11) {
+        if (y + 1 >= Map.MAP_SIZE) {
             System.out.println("Unable to move right");
             return;
         }

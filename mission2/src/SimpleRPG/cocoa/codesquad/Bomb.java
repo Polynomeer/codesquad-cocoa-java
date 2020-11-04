@@ -26,8 +26,8 @@ public class Bomb {
         Random rd = new Random();
         while (true){
             // get random bomb position
-            int bomb_x = rd.nextInt(11);
-            int bomb_y = rd.nextInt(11);
+            int bomb_x = rd.nextInt(Map.MAP_SIZE);
+            int bomb_y = rd.nextInt(Map.MAP_SIZE);
             if (this.x != 5 && this.y != 5) break;
         }
 
