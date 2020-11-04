@@ -25,7 +25,12 @@ public class Map {
     public void printMap() {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                System.out.print(map[i][j] + "\t");
+                if (map[i][j] == -1) { // hide bomb to user
+                    System.out.print(0 + "\t");
+                }
+                else {
+                    System.out.print(map[i][j] + "\t");
+                }
             }
             System.out.println();
         }
