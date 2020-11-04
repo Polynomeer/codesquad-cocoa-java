@@ -39,6 +39,7 @@ https://www.acmicpc.net/step/4
 - https://rogerdudler.github.io/git-guide/index.ko.html
 - https://github.com/jeonghwan-kim/git-usage
 - https://dataitgirls2.github.io/tutorial/Tutorial_180628_Git_and_Github.html
+- commit message : https://medium.com/hashbox/git-commit-%EB%A9%94%EC%84%B8%EC%A7%80-%EA%B7%9C%EC%B9%99-conventional-commits-71710f7f53c
 
 ### 마크다운 문법
 
