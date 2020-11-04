@@ -3,6 +3,7 @@ package SimpleRPG.cocoa.codesquad;
 public class Character {
     private int x;
     private int y;
+    private int score = 0;
 
     public int getX() {
         return x;
@@ -18,6 +19,14 @@ public class Character {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore(int score) {
+        this.score = score;
     }
 
     public void moveUp() {
@@ -37,7 +46,7 @@ public class Character {
     }
 
     public void moveDown() {
-        if (this.x + 1 > 11) {
+        if (this.x + 1 >= 11) {
             System.out.println("Unable to move down");
             return;
         }
@@ -45,7 +54,7 @@ public class Character {
     }
 
     public void moveRight() {
-        if (y + 1 > 11) {
+        if (y + 1 >= 11) {
             System.out.println("Unable to move right");
             return;
         }
