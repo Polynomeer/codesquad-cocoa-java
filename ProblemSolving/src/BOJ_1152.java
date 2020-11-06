@@ -6,12 +6,13 @@ public class BOJ_1152 {
         String str = sc.nextLine();
         sc.close();
 
-        // split string by space
-        String[] strArr = str.split(" ");
-
-        for (String s : strArr) {
-            System.out.println(s);
+        str = str.trim();   // trim first and end space
+        if (str.isEmpty()) {
+            System.out.println(0);
         }
-        System.out.println(strArr.length);
+        else {
+            String[] strArr = str.split("\\s"); // split string by space
+            System.out.println(strArr.length);
+        }
     }
 }
