@@ -9,3 +9,11 @@ Scanner, InputStream, BufferedReader
 ### BOJ.1152
 String.split(), String.trim()
 - https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html#split(java.lang.String)
+
+### BOJ. 2675
+String 문자열 붙이기
+- https://rullurangrang.tistory.com/5
+
+### Scanner
+Scanner 버퍼 비우기
+- https://medium.com/@kimddub/java-scanner-%EB%B2%84%ED%8D%BC-%EB%B9%84%EC%9A%B0%EA%B8%B0-913c652cc144
