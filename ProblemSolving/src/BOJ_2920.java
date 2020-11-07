@@ -4,7 +4,7 @@ public class BOJ_2920 {
 
     static boolean isAscending(int[] s) {
         for (int i = 0; i < s.length - 1; i++) {
-            if (s[i] >= s[i+1]) {
+            if (s[i] >= s[i + 1]) {
                 return false;
             }
         }
@@ -13,7 +13,7 @@ public class BOJ_2920 {
 
     static boolean isDescending(int[] s) {
         for (int i = 0; i < s.length - 1; i++) {
-            if (s[i] <= s[i+1]) {
+            if (s[i] <= s[i + 1]) {
                 return false;
             }
         }
