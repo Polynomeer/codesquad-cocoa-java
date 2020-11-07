@@ -20,8 +20,8 @@ public class BOJ_2908 {
     private static String reverse(String s) {
         String result = "";
 
-        for (int i =0; i<s.length()/2;i++) {
-            result = swap(s, i, s.length()-i-1);
+        for (int i = 0; i < s.length() / 2; i++) {
+            result = swap(s, i, s.length() - i - 1);
         }
         return result;
     }
