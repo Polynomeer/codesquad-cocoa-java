@@ -10,9 +10,14 @@ Scanner, InputStream, BufferedReader
 String.split(), String.trim()
 - https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html#split(java.lang.String)
 
-### BOJ. 2675
+### BOJ.2675
 String 문자열 붙이기
 - https://rullurangrang.tistory.com/5
+
+### BOJ.10809
+
+배열의 선언 및 초기화
+- https://coding-factory.tistory.com/253
 
 ### Scanner
 Scanner 버퍼 비우기
