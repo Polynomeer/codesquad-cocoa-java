@@ -15,9 +15,12 @@ String 문자열 붙이기
 - https://rullurangrang.tistory.com/5
 
 ### BOJ.10809
-
 배열의 선언 및 초기화
 - https://coding-factory.tistory.com/253
+
+### BOJ.10818
+문제의 조건에서 값의 범위를 잘 파악해야한다. 이 문제의 경우 처음에 maxNum변수를 초기화할때 0으로 하여 음수값을 체크하지 못하였다.
+
 
 ### Scanner
 Scanner 버퍼 비우기
