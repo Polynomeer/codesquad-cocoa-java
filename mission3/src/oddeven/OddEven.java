@@ -41,7 +41,7 @@ public class OddEven {
             betMoney(user, rivals[round], number);
 
             if (user.getMoney() == 0) {
-                printGameOver(round, user, rivals);
+                printGameOver(turn, user, rivals);
                 isExit = true;
                 continue;
             }
@@ -92,9 +92,10 @@ public class OddEven {
 
     }
 
-    private static void printGameOver(int round, Player user, Player[] rivals) {
-        System.out.println("Game Over!");
-        System.out.println(user.getName() + "'s money is " + user.getMoney());
+    private static void printGameOver(int turn, Player user, Player[] rivals) {
+        System.out.println("\n[Game Over]");
+        System.out.println("✓ Turn " + turn);
+        System.out.println("✓ " + user.getName() + "'s money is " + user.getMoney());
     }
 
     private static void makeRival(int round, int userMoney, Player[] rivals) {
