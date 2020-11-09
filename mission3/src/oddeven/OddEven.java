@@ -20,21 +20,24 @@ public class OddEven {
         rd.setSeed(System.currentTimeMillis());
 
         int round = 0;
+        int turn = 1;
         boolean isExit = false;
         while (!isExit && round < 8) {
             if (rivals[round] == null) {
                 makeRival(round, user.getMoney(), rivals);
             }
-            System.out.println("\n ⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
-            System.out.println("| Round " + (round + 1) + "\t\t\t\t\t\t\t |");
-            System.out.println("| Odd or Even? \t\t\t\t\t\t |");
-            System.out.println("| " + user.getName() + "'s money : " + user.getMoney() + "\t\t\t\t\t |");
-            System.out.println("| " + rivals[round].getName() + "'s money : " + rivals[round].getMoney() + "\t\t\t\t |");
-            System.out.println(" ⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
+            System.out.println("\n⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
+            System.out.println("• Round " + (round + 1) + "\t\t\t\t\t Turn " + turn);
+            System.out.println("• Odd or Even? ");
+            System.out.println("• " + user.getName() + "'s money : " + user.getMoney());
+            System.out.println("• " + rivals[round].getName() + "'s money : " + rivals[round].getMoney());
+            System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
+
 
             int number = rd.nextInt(20) + 1;
             System.out.println("number is " + number);
 
+            turn++;
             betMoney(user, rivals[round], number);
 
             if (user.getMoney() == 0) {
@@ -87,8 +90,6 @@ public class OddEven {
             rival.addMoney(betting);
         }
 
-        if (user.getMoney() < 0) user.setMoney(0);
-        if (rival.getMoney() < 0) rival.setMoney(0);
     }
 
     private static void printGameOver(int round, Player user, Player[] rivals) {
@@ -98,11 +99,9 @@ public class OddEven {
 
     private static void makeRival(int round, int userMoney, Player[] rivals) {
         if (round == 0) {
-            System.out.println("player" + round + " created");
             rivals[0] = new Player("player1", 120);
             return;
         }
-        System.out.println("player" + round + " created");
         rivals[round] = new Player("player" + round, userMoney * (int) Math.pow(1.5, (double) round));
     }
 
