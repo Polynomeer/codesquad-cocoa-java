@@ -20,12 +20,7 @@ public class LedgerDTO {
     }
 
     public void setId(int id) {
-        if(id > 0) {
-            this.id = id;
-        }else{
-            System.out.println("error!!!");
-        }
-
+        this.id = id;
     }
 
     public String getDate() {
@@ -62,6 +57,6 @@ public class LedgerDTO {
 
     @Override
     public String toString() {
-        return id + " " + date + " " + summary +" " + revenue + " " + expenditure;
+        return id + " " + date + " " + summary + " " + revenue + " " + expenditure;
     }
 }
