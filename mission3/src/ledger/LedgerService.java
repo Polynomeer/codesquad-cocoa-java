@@ -26,7 +26,6 @@ public class LedgerService {
         while (sc.hasNextLine()) {
             index = sc.nextLine().charAt(0) - '0';
         }
-        System.out.println(index);
 
         sc = new Scanner(System.in);
         while (!Main.exitCode) {
@@ -34,7 +33,7 @@ public class LedgerService {
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
             System.out.println("\t\t" + "'s Financial ledger.Ledger");
             System.out.println("1 : input data, 2 : delete data, 3 : modify data, 4 : print data");
-            System.out.println("5 : user registration 0: exit");
+            System.out.println("0: exit");
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
 
             int input = sc.nextInt();
@@ -63,13 +62,15 @@ public class LedgerService {
         LedgerDTO ledgerDTO;
         System.out.print("date : ");
         String date = sc.next();
+        System.out.print("type : ");
+        String type = sc.next();
         System.out.print("summary : ");
         String summary = sc.next();
         System.out.print("revenue : ");
         int revenue = sc.nextInt();
         System.out.print("expenditure : ");
         int expenditure = sc.nextInt();
-        ledgerDTO = new LedgerDTO(id, date, summary, revenue, expenditure);
+        ledgerDTO = new LedgerDTO(id, date, type, summary, revenue, expenditure, 0);
         return ledgerDTO;
     }
 
@@ -79,7 +80,19 @@ public class LedgerService {
     }
 
     private static void printData() {
-        ledgerDAO.select();
+        System.out.print("Do you want to sort data? (Y/N)");
+        char choice = sc.next().charAt(0);
+        choice = Character.toLowerCase(choice);
+        int sortBy = 0;
+        char sortType = 0;
+        if (choice == 'y') {
+            System.out.print("Sort by 1. date 2. revenue 3. expenditure ? ");
+            sortBy = sc.nextInt();
+            System.out.print("Ascending (A/a)? or Descending (D/d)? ");
+            sortType = sc.next().charAt(0);
+            sortType = Character.toLowerCase(sortType);
+        }
+        ledgerDAO.select(sortBy, sortType);
     }
 
     private static void modifyData() {
@@ -95,6 +108,5 @@ public class LedgerService {
         int id = sc.nextInt();
         ledgerDAO.delete(id);
     }
-
 
 }

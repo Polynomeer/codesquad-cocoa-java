@@ -2,6 +2,7 @@ package ledger;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class LedgerDAO {
@@ -23,11 +24,13 @@ public class LedgerDAO {
                 if (line == null) break; // last enter line has no contents
                 int id = Integer.parseInt(line[0]);
                 String date = line[1];
-                String summary = line[2];
-                int revenue = Integer.parseInt(line[3]);
-                int expenditure = Integer.parseInt(line[4]);
+                String type = line[2];
+                String summary = line[3];
+                int revenue = Integer.parseInt(line[4]);
+                int expenditure = Integer.parseInt(line[5]);
+                int balance = Integer.parseInt(line[6]);
 
-                LedgerDTO ledgerDTO = new LedgerDTO(id, date, summary, revenue, expenditure);
+                LedgerDTO ledgerDTO = new LedgerDTO(id, date, type, summary, revenue, expenditure, balance);
                 System.out.println(ledgerDTO);
                 ledgerList.add(ledgerDTO);
             }
@@ -52,15 +55,31 @@ public class LedgerDAO {
         ledgerList = this.loadData(); // maybe memory loss
     }
 
-    public void select() {
+    public void select(int sortBy, char sortType) {
         System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
-        System.out.println("id \t\t date \t\t summary \t revenue \t expenditure \t balance");
-        int balance = 0;
+        System.out.println("id \t\t date \t\t type \t\t summary \t revenue \t expenditure \t balance");
+
+        if (sortBy == 0 && sortType == 0) {
+            selectAll();
+        }
+        if (sortBy == 1) { // sort by date
+            Collections.sort(ledgerList);
+        }
+        if (sortBy == 2) { // sort by revenue
+            Collections.sort(ledgerList);
+            selectAll();
+        }
+        if (sortBy == 3) { // sort by expenditure
+            Collections.sort(ledgerList);
+        }
+    }
+    public void selectAll(){
         for (LedgerDTO l : ledgerList) {
+            int balance = 0;
             if (l == null) break;
             balance += l.getRevenue() - l.getExpenditure();
-            System.out.println(l.getId() + "\t|\t" + l.getDate() + "\t|\t" + l.getSummary() + "\t|\t" +
-                    l.getRevenue() + "\t|\t" + l.getExpenditure() + "\t|\t" + balance);
+            System.out.println(l.getId() + "\t|\t" + l.getDate() + "\t|\t" + l.getType() + "\t|\t" +
+                    l.getSummary() + "\t|\t" + l.getRevenue() + "\t|\t" + l.getExpenditure() + "\t|\t" + balance);
         }
     }
 
@@ -107,4 +126,5 @@ public class LedgerDAO {
         }
         ledgerList = this.loadData();
     }
+
 }
