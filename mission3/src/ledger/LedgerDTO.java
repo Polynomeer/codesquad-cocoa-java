@@ -1,13 +1,13 @@
 package ledger;
 
-public class Ledger {
+public class LedgerDTO {
     private int id;
     private String date;
     private String summary;
     private int revenue;
     private int expenditure;
 
-    public Ledger(int id, String date, String summary, int revenue, int expenditure) {
+    public LedgerDTO(int id, String date, String summary, int revenue, int expenditure) {
         this.id = id;
         this.date = date;
         this.summary = summary;
@@ -20,7 +20,12 @@ public class Ledger {
     }
 
     public void setId(int id) {
-        this.id = id;
+        if(id > 0) {
+            this.id = id;
+        }else{
+            System.out.println("error!!!");
+        }
+
     }
 
     public String getDate() {
@@ -55,24 +60,8 @@ public class Ledger {
         this.expenditure = expenditure;
     }
 
-    public int print(int balance) {
-        balance += this.revenue - this.expenditure;
-        System.out.println(this.id + "\t|\t" + this.date + "\t|\t" + this.summary + "\t|\t" +
-                this.revenue + "\t|\t" + this.expenditure + "\t|\t" + balance);
-        return balance;
-    }
-
-    public void delete() {
-        this.date = "none";
-        this.summary = "none";
-        this.revenue = 0;
-        this.expenditure = 0;
-    }
-
-    public void modify(String date, String summary, int revenue, int expenditure) {
-        this.date = date;
-        this.summary = summary;
-        this.revenue = revenue;
-        this.expenditure = expenditure;
+    @Override
+    public String toString() {
+        return id + " " + date + " " + summary +" " + revenue + " " + expenditure;
     }
 }

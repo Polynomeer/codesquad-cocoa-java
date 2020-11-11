@@ -1,10 +1,14 @@
 package ledger;
 
-public class User {
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserDTO {
     private String username;
     private String password;
+    private List<LedgerDTO> ledgerList;
 
-    public User(String username) {
+    public UserDTO(String username) {
         this.username = username;
     }
 
@@ -22,6 +26,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
     boolean isEmpty() {
