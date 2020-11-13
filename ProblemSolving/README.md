@@ -36,7 +36,9 @@ Scanner 버퍼 비우기
 
 HashMap에서 키에 따른 값 카운트하기
 - https://kumgo1d.tistory.com/41
-- https://mine-it-record.tistory.com/233   
+- https://mine-it-record.tistory.com/233
+- [get Key by Value](https://rios.tistory.com/entry/JAVA-hashMap-key%EA%B0%92%EC%9C%BC%EB%A1%9C-value-%EC%B0%BE%EA%B8%B0-value%EB%A1%9C-key%EA%B0%92-%EC%B0%BE%EA%B8%B0)
+- https://vaert.tistory.com/107
 
 HashSet
 - https://coding-factory.tistory.com/554
