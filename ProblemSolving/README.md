@@ -33,8 +33,10 @@ Scanner 버퍼 비우기
 - https://medium.com/@kimddub/java-scanner-%EB%B2%84%ED%8D%BC-%EB%B9%84%EC%9A%B0%EA%B8%B0-913c652cc144
 
 ### prgms.42576
+
 HashMap에서 키에 따른 값 카운트하기
 - https://kumgo1d.tistory.com/41
 - https://mine-it-record.tistory.com/233   
+
 HashSet
 - https://coding-factory.tistory.com/554
