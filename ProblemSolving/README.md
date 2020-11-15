@@ -42,3 +42,11 @@ HashMap에서 키에 따른 값 카운트하기
 
 HashSet
 - https://coding-factory.tistory.com/554
+
+### prgms.42748
+- int[] to ArrayList
+https://stackoverflow.com/questions/1073919/how-to-convert-int-into-listinteger-in-java
+- subList in ArrayList
+https://beginnersbook.com/2013/12/how-to-get-sublist-of-an-arraylist-with-example/
+- copy range in Array
+https://stackoverflow.com/questions/11001720/get-only-part-of-an-array-in-java
