@@ -31,3 +31,22 @@ String 문자열 붙이기
 ### Scanner
 Scanner 버퍼 비우기
 - https://medium.com/@kimddub/java-scanner-%EB%B2%84%ED%8D%BC-%EB%B9%84%EC%9A%B0%EA%B8%B0-913c652cc144
+
+### prgms.42576
+
+HashMap에서 키에 따른 값 카운트하기
+- https://kumgo1d.tistory.com/41
+- https://mine-it-record.tistory.com/233
+- [get Key by Value](https://rios.tistory.com/entry/JAVA-hashMap-key%EA%B0%92%EC%9C%BC%EB%A1%9C-value-%EC%B0%BE%EA%B8%B0-value%EB%A1%9C-key%EA%B0%92-%EC%B0%BE%EA%B8%B0)
+- https://vaert.tistory.com/107
+
+HashSet
+- https://coding-factory.tistory.com/554
+
+### prgms.42748
+- int[] to ArrayList
+https://stackoverflow.com/questions/1073919/how-to-convert-int-into-listinteger-in-java
+- subList in ArrayList
+https://beginnersbook.com/2013/12/how-to-get-sublist-of-an-arraylist-with-example/
+- copy range in Array
+https://stackoverflow.com/questions/11001720/get-only-part-of-an-array-in-java
