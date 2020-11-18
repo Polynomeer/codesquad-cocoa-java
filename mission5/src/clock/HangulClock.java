@@ -74,7 +74,7 @@ public class HangulClock {
         if (hour == 12 && minute == 0) {
             clockSet[4][0] = true; // 정 on
             clockSet[5][0] = true; // 오 on
-            clockSet[5][3] = false; // 시 off
+            clockSet[2][5] = false; // 시 off
             clockSet[5][5] = false; // 분 off
             return;
         }
@@ -82,7 +82,7 @@ public class HangulClock {
         if (hour == 0 && minute == 0) {
             clockSet[3][0] = true; // 자 on
             clockSet[4][0] = true; // 정 on
-            clockSet[5][3] = false; // 시 off
+            clockSet[2][5] = false; // 시 off
             clockSet[5][5] = false; // 분 off
             return;
         }
@@ -110,7 +110,7 @@ public class HangulClock {
 
     private static void initClockSet() {
         Arrays.stream(clockSet).forEach(a -> Arrays.fill(a, false));
-        clockSet[5][3] = true; // 시 : default set is true
+        clockSet[2][5] = true; // 시 : default set is true
         clockSet[5][5] = true; // 분 : default set is true
     }
 
