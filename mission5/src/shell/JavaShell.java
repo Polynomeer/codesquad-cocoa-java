@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import clock.HangulClock;
+
 public class JavaShell {
 
     public static final int MAX_CMD = 30;
@@ -24,18 +26,33 @@ public class JavaShell {
             System.out.print(path + "> ");
 
             String input = sc.nextLine();
-            StringTokenizer st = new StringTokenizer(input, " ");
-
-            while (st.hasMoreTokens()) {
-                String token = st.nextToken().toString();
-                command.add(token);
-            }
+            javaShell.tokenize(input, command);
+            javaShell.parse(command);
 
             int isError = javaShell.checkValidity(command);
-            if (isError != 0) continue;
             if (EXIT_CODE == true) break;
+            if (isError != 0) continue;
 
             javaShell.runByProcessBuilder(command);
+        }
+    }
+
+    public void tokenize(String input, List<String> command) {
+        StringTokenizer st = new StringTokenizer(input, " ");
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken().toString();
+            command.add(token);
+        }
+    }
+
+    public void parse(List<String> command) {
+        for (String cmd : command) {
+            if (cmd.equals("hclock")) {
+                runClock();
+            }
+            if (cmd.equals("q")) {
+                EXIT_CODE = true;
+            }
         }
     }
 
@@ -44,7 +61,6 @@ public class JavaShell {
             System.out.println("Exceeded command maximum length..");
             return ERROR_CODE_01;
         }
-        if (command.get(0).equals("q")) EXIT_CODE = true;
         return 0; // no error
     }
 
@@ -68,4 +84,17 @@ public class JavaShell {
             output.write(buffer, 0, n);
         }
     }
+
+    public static void runClock() {
+        while (true) {
+            try {
+                HangulClock.clearScreen();
+                HangulClock.printScreen(HangulClock.getCalendar());
+                Thread.sleep(60000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
