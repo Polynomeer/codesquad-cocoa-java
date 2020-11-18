@@ -1,14 +1,12 @@
 package clock;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
 public class HangulClock {
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_GREEN = "\u001B[32m";
     private static final String[][] hours = {{"열", "두2"}, {"한"}, {"두"}, {"세"}, {"네"}, {"다", "섯"}, {"여", "섯2"}, {"일", "곱"}, {"여2", "덟"}, {"아", "홉"}, {"열"}, {"열", "한2"}, {"열", "두2"}};
     private static final String[][] minutes = {
             {""}, {"일2"}, {"이2"}, {"삼2"}, {"사2"}, {"오3"}, {"육"}, {"칠"}, {"팔"}, {"구"}, {"십"}, {"십", "일2"}, {"십", "이2"},
@@ -21,8 +19,7 @@ public class HangulClock {
             {"오", "십", "오3"}, {"오", "십", "육"}, {"오", "십", "칠"}, {"오", "십", "팔"}, {"오", "십", "구"}};
     private static final Calendar calendar = Calendar.getInstance();
     private static final Date date = new Date();
-
-    private static String[][] clock = {
+    private static final String[][] clock = {
             {"한", "두", "세", "네", "다", "섯"},
             {"여", "섯", "일", "곱", "여", "덟"},
             {"아", "홉", "열", "한2", "두2", "시"},
@@ -31,20 +28,11 @@ public class HangulClock {
             {"오2", "오3", "칠", "팔", "구", "분"}};
     private static boolean[][] clockSet = new boolean[6][6];
 
-    public static void main(String[] args) {
-        while (true) {
-            try {
-                clearScreen();
-                printScreen(calendar);
-                Thread.sleep(60000);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public static Calendar getCalendar() {
+        return calendar;
     }
 
-    private static void printScreen(Calendar calendar) {
+    public static void printScreen(Calendar calendar) {
         date.setTime(System.currentTimeMillis());
         calendar.setTime(date);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -68,7 +56,7 @@ public class HangulClock {
         System.out.println();
     }
 
-    private static void setClock(int hour, int minute) {
+    public static void setClock(int hour, int minute) {
         String[] hourString = hours[hour];
         String[] minuteString = minutes[minute];
 
@@ -104,12 +92,12 @@ public class HangulClock {
         }
     }
 
-    private static void clearScreen() {
+    public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    private static void initClockSet() {
+    public static void initClockSet() {
         Arrays.stream(clockSet).forEach(a -> Arrays.fill(a, false));
         clockSet[2][5] = true; // 시 : default set is true
         clockSet[5][5] = true; // 분 : default set is true
