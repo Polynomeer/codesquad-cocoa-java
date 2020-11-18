@@ -24,7 +24,7 @@ public class HangulClock {
             {"여", "섯", "일", "곱", "여", "덟"},
             {"아", "홉", "열", "한2", "두2", "시"},
             {"자", "이", "삼", "사", "오", "십"},
-            {"정", "일", "이2", "삼2", "사2", "육"},
+            {"정", "일2", "이2", "삼2", "사2", "육"},
             {"오2", "오3", "칠", "팔", "구", "분"}};
     private static boolean[][] clockSet = new boolean[6][6];
 
@@ -36,6 +36,7 @@ public class HangulClock {
         date.setTime(System.currentTimeMillis());
         calendar.setTime(date);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        hour = hour > 12 ? hour - 12 : hour;
         int minute = calendar.get(Calendar.MINUTE);
 
         initClockSet();
