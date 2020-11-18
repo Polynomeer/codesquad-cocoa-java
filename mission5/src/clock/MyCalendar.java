@@ -11,7 +11,9 @@ public class MyCalendar {
     private Calendar calendar;
     private int dayOfWeek;
     private int daysInMonth;
-    Date date;
+    private Date date;
+    private boolean isDateChosen = true;
+
 
     public MyCalendar() {
         this.calendar = new GregorianCalendar();
@@ -30,24 +32,34 @@ public class MyCalendar {
     }
 
     public void printCalendar(int year, int month) {
-        this.calendar.set(year, month, 0);
+        this.isDateChosen = false;
+        this.calendar.set(year, month - 1, 0);
         calendar.set(Calendar.DAY_OF_MONTH, 1); //Set the day of month to 1
         this.dayOfWeek = calendar.get(calendar.DAY_OF_WEEK);
         this.daysInMonth = calendar.getActualMaximum(calendar.DAY_OF_MONTH);
-
-        printColumn();
-        printSpace();
-        printDays();
+        printCalendar();
     }
 
+    public void printCalendar(int year) {
+        this.isDateChosen = false;
+        for (int m = 0; m < 12; m++) {
+            this.calendar.set(year, m, 0);
+            calendar.set(Calendar.DAY_OF_MONTH, 1); //Set the day of month to 1
+            this.dayOfWeek = calendar.get(calendar.DAY_OF_WEEK);
+            this.daysInMonth = calendar.getActualMaximum(calendar.DAY_OF_MONTH);
+            printCalendar();
+            System.out.println();
+        }
+    }
+
+    // print columns (month, year, week)
     private void printColumn() {
-        // print columns (month, year, week)
         System.out.println(new SimpleDateFormat("MMMM YYYY").format(calendar.getTime()));
         System.out.println(" Sun  Mon  Tue  Wed  Thu  Fri  Sat");
     }
 
+    // print initial spaces
     private void printSpace() {
-        // print initial spaces
         String initSpace = "";
         for (int i = 0; i < dayOfWeek - 1; i++) {
             initSpace += "     ";
@@ -55,11 +67,11 @@ public class MyCalendar {
         System.out.print(initSpace);
     }
 
+    // print the days of the month starting from 1
     private void printDays() {
-        // print the days of the month starting from 1
         for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; ) {
             for (int j = ((dayOfMonth == 1) ? dayOfWeek - 1 : 0); j < 7 && (dayOfMonth <= daysInMonth); j++) {
-                if (date.getDate() == dayOfMonth) {
+                if (this.isDateChosen == true && date.getDate() == dayOfMonth) {
                     String space = date.getDate() >= 10 ? "  " : "   ";
                     System.out.print(space + ANSI_GREEN + dayOfMonth + ANSI_RESET + " ");
                 } else {

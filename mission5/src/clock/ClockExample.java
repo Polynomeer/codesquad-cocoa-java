@@ -28,7 +28,12 @@ public class ClockExample {
             myCalendar.printCalendar();
             return;
         }
-        if (args.length >= 3){
+        if (args.length == 2){
+            int year = Integer.parseInt(args[1]);
+            myCalendar.printCalendar(year);
+            return;
+        }
+        if (args.length == 3){
             int year = Integer.parseInt(args[1]);
             int month = Integer.parseInt(args[2]);
             myCalendar.printCalendar(year, month);
