@@ -27,7 +27,7 @@ public class HangulClock {
             {"여", "섯", "일", "곱", "여", "덟"},
             {"아", "홉", "열", "한2", "두2", "시"},
             {"자", "이", "삼", "사", "오", "십"},
-            {"정", "일", "이", "삼2", "사2", "육"},
+            {"정", "일", "이2", "삼2", "사2", "육"},
             {"오2", "오3", "칠", "팔", "구", "분"}};
     private static boolean[][] clockSet = new boolean[6][6];
 
@@ -56,6 +56,7 @@ public class HangulClock {
         for (int i = 0; i < clock.length; i++) {
             for (int j = 0; j < clock[i].length; j++) {
                 String block = clock[i][j];
+
                 if (clockSet[i][j] == true) {
                     System.out.print(ANSI_GREEN + block.charAt(0) + ANSI_RESET + " ");
                 } else {
