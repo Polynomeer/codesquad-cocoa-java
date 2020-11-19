@@ -9,17 +9,20 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import clock.ClockRunner;
-import clock.HangulClock;
 
 public class JavaShell {
 
     public static final int MAX_CMD = 30;
     public static final int ERROR_CODE_01 = 1; // exceeed command length
     public static boolean EXIT_CODE = false;
+    private static Scanner sc;
 
-    private static void main(String[] args) throws IOException, InterruptedException {
-        JavaShell javaShell = new JavaShell();
-        Scanner sc = new Scanner(System.in);
+    public JavaShell(Scanner sc) {
+        this.sc = sc;
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        JavaShell javaShell = new JavaShell(new Scanner(System.in));
 
         while (!EXIT_CODE) {
             List<String> command = new ArrayList<>();
