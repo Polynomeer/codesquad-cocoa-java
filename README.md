@@ -2,29 +2,19 @@
 
 ## 미션 1
 
-### 구구단
-
-- [x] 클린 코딩
-- [x] 입력 처리
-- [x] 깔끔하게 출력
-
-### 조건문 연습
-
-https://www.acmicpc.net/step/4
-
-- [ ] 두 수 비교하기 https://www.acmicpc.net/problem/1330
-- [ ] 시험 성적 https://www.acmicpc.net/problem/9498
-- [ ] 윤년 https://www.acmicpc.net/problem/2753
-- [ ] 사분면 고르기 https://www.acmicpc.net/problem/14681
-- [ ] 알람 시계 https://www.acmicpc.net/problem/2884
-
-### 반복문 연습
-
-
-
-### 별찍기
+https://github.com/Polynomeer/codesquad-cocoa-java/tree/main/mission1
 
 ## 미션 2
+
+https://github.com/Polynomeer/codesquad-cocoa-java/tree/main/mission2/src
+
+## 미션 3/4
+
+https://github.com/Polynomeer/codesquad-cocoa-java/tree/main/mission3
+
+## 미션 5/6
+
+https://github.com/Polynomeer/codesquad-cocoa-java/tree/main/mission5/src
 
 ## 참고링크
 
