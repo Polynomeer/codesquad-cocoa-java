@@ -2,6 +2,7 @@ package ledger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class LedgerService {
@@ -15,7 +16,7 @@ public class LedgerService {
         sc = new Scanner(file); // read file by Scanner
     }
 
-    public void process() {
+    public void process() throws IOException {
         int index = 0;
         // get index from last line
         while (sc.hasNextLine()) {
@@ -53,8 +54,6 @@ public class LedgerService {
     }
 
     private static LedgerDTO getInputByKeyboard(int id) {
-        LedgerDTO ledgerDTO;
-
         System.out.print("date : ");
         String date = sc.next();
         System.out.print("type : ");
@@ -66,12 +65,10 @@ public class LedgerService {
         System.out.print("expenditure : ");
         int expenditure = sc.nextInt();
 
-        ledgerDTO = new LedgerDTO(id, date, type, summary, revenue, expenditure, 0);
-
-        return ledgerDTO;
+        return new LedgerDTO(id, date, type, summary, revenue, expenditure, 0);
     }
 
-    private static void inputData(int id) {
+    private static void inputData(int id) throws FileNotFoundException {
         LedgerDTO ledgerDTO = getInputByKeyboard(id);
         ledgerDAO.insert(ledgerDTO);
     }
@@ -92,7 +89,7 @@ public class LedgerService {
         ledgerDAO.select(sortBy, sortType);
     }
 
-    private static void modifyData() {
+    private static void modifyData() throws IOException {
         sc = new Scanner(System.in);
         System.out.print("id to modify : ");
         int id = sc.nextInt();
@@ -100,7 +97,7 @@ public class LedgerService {
         ledgerDAO.update(ledgerDTO);
     }
 
-    private static void deleteData() {
+    private static void deleteData() throws IOException {
         System.out.print("id to delete : ");
         int id = sc.nextInt();
         ledgerDAO.delete(id);
