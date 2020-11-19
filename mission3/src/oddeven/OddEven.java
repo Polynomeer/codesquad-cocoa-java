@@ -74,7 +74,7 @@ public class OddEven {
             }
         }
 
-        boolean isOdd = number % 2 == 1 ? true : false;
+        boolean isOdd = number % 2 == 1;
 
         if (choice == 'o' && isOdd == true) {
             System.out.println("Correct!! It's odd number!!");
