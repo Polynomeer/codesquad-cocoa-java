@@ -9,7 +9,7 @@ public class UserService {
     private void process(){
         Scanner sc = new Scanner(System.in);
         UserDTO userDTO = new UserDTO("user");
-        while (!Main.exitCode) {
+        while (!Main.isExit) {
                 System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
                 System.out.println("                    Your Financial ledger.Ledger");
                 System.out.println("Please register your account.");

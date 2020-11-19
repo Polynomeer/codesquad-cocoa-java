@@ -9,18 +9,13 @@ public class LedgerService {
     private static LedgerDAO ledgerDAO;
     private static Scanner sc;
 
-    public LedgerService() {
+    public LedgerService() throws FileNotFoundException {
         ledgerDAO = new LedgerDAO();
+        File file = new File("./data.txt"); // create File instance
+        sc = new Scanner(file); // read file by Scanner
     }
 
     public void process() {
-        try {
-            File file = new File("./data.txt"); // create File instance
-            sc = new Scanner(file); // read file by Scanner
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
         int index = 0;
         // get index from last line
         while (sc.hasNextLine()) {
@@ -28,8 +23,7 @@ public class LedgerService {
         }
 
         sc = new Scanner(System.in);
-        while (!Main.exitCode) {
-
+        while (!Main.isExit) {
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
             System.out.println("\t\t" + "'s Financial ledger.Ledger");
             System.out.println("1 : input data, 2 : delete data, 3 : modify data, 4 : print data");
@@ -39,7 +33,7 @@ public class LedgerService {
             int input = sc.nextInt();
             switch (input) {
                 case 0:
-                    Main.exitCode = true;
+                    Main.isExit = true;
                     break;
                 case 1:
                     inputData(++index);
@@ -60,6 +54,7 @@ public class LedgerService {
 
     private static LedgerDTO getInputByKeyboard(int id) {
         LedgerDTO ledgerDTO;
+
         System.out.print("date : ");
         String date = sc.next();
         System.out.print("type : ");
@@ -70,7 +65,9 @@ public class LedgerService {
         int revenue = sc.nextInt();
         System.out.print("expenditure : ");
         int expenditure = sc.nextInt();
+
         ledgerDTO = new LedgerDTO(id, date, type, summary, revenue, expenditure, 0);
+
         return ledgerDTO;
     }
 
