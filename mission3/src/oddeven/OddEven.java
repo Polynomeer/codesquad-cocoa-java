@@ -33,7 +33,6 @@ public class OddEven {
             System.out.println("• " + rivals[round].getName() + "'s money : " + rivals[round].getMoney());
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
 
-
             int number = rd.nextInt(20) + 1;
             System.out.println("number is " + number);
 
@@ -43,11 +42,9 @@ public class OddEven {
             if (user.getMoney() == 0) {
                 printGameOver(turn, user, rivals);
                 isExit = true;
-                continue;
             }
             if (rivals[round].getMoney() == 0) {
                 round++;
-                continue;
             }
 
         }
