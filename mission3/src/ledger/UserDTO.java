@@ -36,8 +36,7 @@ public class UserDTO {
                 '}';
     }
 
-    boolean isEmpty() {
-        if (this.username == "") return true;
-        return false;
+    public boolean isEmpty() {
+        return this.username.equals("");
     }
 }

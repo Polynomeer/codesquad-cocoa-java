@@ -71,12 +71,12 @@ public class LedgerDAO {
     }
 
     public void selectAll() {
-        for (LedgerDTO l : ledgerList) {
+        for (LedgerDTO ledger : ledgerList) {
             int balance = 0;
-            if (l == null) break;
-            balance += l.getRevenue() - l.getExpenditure();
-            System.out.println(l.getId() + "\t|\t" + l.getDate() + "\t|\t" + l.getType() + "\t|\t" +
-                    l.getSummary() + "\t|\t" + l.getRevenue() + "\t|\t" + l.getExpenditure() + "\t|\t" + balance);
+            if (ledger == null) break;
+            balance += ledger.getRevenue() - ledger.getExpenditure();
+            System.out.println(ledger.getId() + "\t|\t" + ledger.getDate() + "\t|\t" + ledger.getType() + "\t|\t" +
+                    ledger.getSummary() + "\t|\t" + ledger.getRevenue() + "\t|\t" + ledger.getExpenditure() + "\t|\t" + balance);
         }
     }
 
@@ -84,15 +84,15 @@ public class LedgerDAO {
         // update in ArrayList, and rewrite to data file
         BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
         int idx = 0;
-        for (LedgerDTO l : ledgerList) { // find ledger which matches id
-            if (l.getId() == ledgerDTO.getId()) { // if id matches, update data
+        for (LedgerDTO ledger : ledgerList) { // find ledger which matches id
+            if (ledger.getId() == ledgerDTO.getId()) { // if id matches, update data
                 ledgerList.set(idx, ledgerDTO);
                 break;
             }
             idx++;
         }
-        for (LedgerDTO l : ledgerList) { // rewrite updated ledger list
-            bw.write(l.toString());
+        for (LedgerDTO ledger : ledgerList) { // rewrite updated ledger list
+            bw.write(ledger.toString());
             bw.newLine();
         }
         bw.close();
@@ -103,15 +103,15 @@ public class LedgerDAO {
     public void delete(int id) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
         int idx = 0;
-        for (LedgerDTO l : ledgerList) { // find ledger which matches id
-            if (l.getId() == id) { // if id matches, update data
+        for (LedgerDTO ledger : ledgerList) { // find ledger which matches id
+            if (ledger.getId() == id) { // if id matches, update data
                 ledgerList.remove(id);
                 break;
             }
             idx++;
         }
-        for (LedgerDTO l : ledgerList) { // rewrite updated ledger list
-            bw.write(l.toString());
+        for (LedgerDTO ledger : ledgerList) { // rewrite updated ledger list
+            bw.write(ledger.toString());
             bw.newLine();
         }
         bw.close();
