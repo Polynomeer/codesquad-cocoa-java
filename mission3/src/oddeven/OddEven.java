@@ -6,12 +6,17 @@ import java.util.Scanner;
 public class OddEven {
 
     private static final int MAX_RIVAL = 8;
+    private static Scanner sc;
+
+    public OddEven() {
+        sc = new Scanner(System.in);
+    }
 
     public static void main(String[] args) {
+        OddEven oddEven = new OddEven();
         Player user = new Player("", 100);
         Player[] rivals = new Player[MAX_RIVAL];
 
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter your name : ");
         String name = sc.next();
         user.setName(name);
@@ -52,8 +57,6 @@ public class OddEven {
     }
 
     private static void betMoney(Player user, Player rival, int number) {
-        Scanner sc = new Scanner(System.in);
-
         System.out.print("Your choice? (O/o : odd, E/e : even) : ");
         char choice = sc.next().charAt(0);
         choice = Character.toLowerCase(choice);
