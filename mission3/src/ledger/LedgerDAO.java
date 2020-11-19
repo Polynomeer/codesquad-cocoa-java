@@ -20,7 +20,7 @@ public class LedgerDAO {
 
         while (sc.hasNextLine()) {
             String[] line = sc.nextLine().split(" ");
-            if (line == null) break; // last enter line has no contents
+            if (line == null) continue; // last enter line has no contents
             int id = Integer.parseInt(line[0]);
             String date = line[1];
             String type = line[2];
@@ -73,7 +73,7 @@ public class LedgerDAO {
     public void selectAll() {
         for (LedgerDTO ledger : ledgerList) {
             int balance = 0;
-            if (ledger == null) break;
+            if (ledger == null) continue;
             balance += ledger.getRevenue() - ledger.getExpenditure();
             System.out.println(ledger.getId() + "\t|\t" + ledger.getDate() + "\t|\t" + ledger.getType() + "\t|\t" +
                     ledger.getSummary() + "\t|\t" + ledger.getRevenue() + "\t|\t" + ledger.getExpenditure() + "\t|\t" + balance);
