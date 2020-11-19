@@ -7,34 +7,41 @@ public class OddEven {
 
     private static final int MAX_RIVAL = 8;
     private static Scanner sc;
+    private static Random rd;
+    public static boolean isExit = false;
 
     public OddEven() {
         sc = new Scanner(System.in);
+        rd = new Random();
     }
 
     public static void main(String[] args) {
         OddEven oddEven = new OddEven();
-        Player user = new Player("", 100);
+        Player player = new Player("", 100);
         Player[] rivals = new Player[MAX_RIVAL];
 
         System.out.print("Enter your name : ");
         String name = sc.next();
-        user.setName(name);
+        player.setName(name);
+        oddEven.process(player, rivals);
 
-        Random rd = new Random();
+        sc.close();
+    }
+
+    private void process(Player player, Player[] rivals) {
         rd.setSeed(System.currentTimeMillis());
 
         int round = 0;
         int turn = 1;
-        boolean isExit = false;
+
         while (!isExit && round < 8) {
             if (rivals[round] == null) {
-                makeRival(round, user.getMoney(), rivals);
+                makeRival(round, player.getMoney(), rivals);
             }
             System.out.println("\n⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
             System.out.println("• Round " + (round + 1) + "\t\t\t\t\t Turn " + turn);
             System.out.println("• Odd or Even? ");
-            System.out.println("• " + user.getName() + "'s money : " + user.getMoney());
+            System.out.println("• " + player.getName() + "'s money : " + player.getMoney());
             System.out.println("• " + rivals[round].getName() + "'s money : " + rivals[round].getMoney());
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
 
@@ -42,68 +49,69 @@ public class OddEven {
             System.out.println("number is " + number);
 
             turn++;
-            betMoney(user, rivals[round], number);
+            betMoney(player, rivals[round], number);
 
-            if (user.getMoney() == 0) {
-                printGameOver(turn, user, rivals);
+            if (number == 0) { // exit code 0
+                isExit = true;
+            }
+            if (player.getMoney() == 0) {
+                printGameOver(turn, player, rivals);
                 isExit = true;
             }
             if (rivals[round].getMoney() == 0) {
                 round++;
             }
-
         }
-        sc.close();
     }
 
-    private static void betMoney(Player user, Player rival, int number) {
+    private void betMoney(Player player, Player rival, int number) {
         System.out.print("Your choice? (O/o : odd, E/e : even) : ");
         char choice = sc.next().charAt(0);
         choice = Character.toLowerCase(choice);
 
-        int betting = 0;
         boolean valid = false;
 
         while (!valid) {
             System.out.print("How much bet you want? ");
-            betting = sc.nextInt();
-            if (betting > Math.min(user.getMoney(), rival.getMoney())) {
+            int betting = sc.nextInt();
+            if (betting > Math.min(player.getMoney(), rival.getMoney())) {
                 System.out.println("Your betting money exceed maximum value.");
             } else {
+                player.setBetting(betting);
                 valid = true;
             }
         }
+        checkWinner(player, rival, number, choice);
+    }
 
+    private void checkWinner(Player player, Player rival, int number, char choice) {
         boolean isOdd = number % 2 == 1;
+        int betting = player.getBetting();
 
         if (choice == 'o' && isOdd == true) {
             System.out.println("Correct!! It's odd number!!");
-            user.addMoney(betting);
-            rival.subMoney(betting);
+            player.winMoney(rival.loseMoney(betting));
         } else if (choice == 'e' && isOdd == false) {
             System.out.println("Correct!! It's even number!!");
-            user.addMoney(betting);
-            rival.subMoney(betting);
+            player.winMoney(rival.loseMoney(betting));
         } else {
             System.out.println("Wrong!! You lost money..");
-            user.subMoney(betting);
-            rival.addMoney(betting);
+            rival.winMoney(player.loseMoney(betting));
         }
-
     }
 
-    private static void printGameOver(int turn, Player user, Player[] rivals) {
+    private void printGameOver(int turn, Player player, Player[] rivals) {
         System.out.println("\n[Game Over]");
         System.out.println("✓ Turn " + turn);
-        System.out.println("✓ " + user.getName() + "'s money is " + user.getMoney());
+        System.out.println("✓ " + player.getName() + "'s money is " + player.getMoney());
     }
 
-    private static void makeRival(int round, int userMoney, Player[] rivals) {
+    private void makeRival(int round, int playerMoney, Player[] rivals) {
         if (round == 0) {
             rivals[0] = new Player("player1", 120);
             return;
         }
-        rivals[round] = new Player("player" + round, userMoney * (int) Math.pow(1.5, (double) round));
+        rivals[round] = new Player("player" + round, playerMoney * (int) Math.pow(1.5, (double) round));
     }
 
 }
