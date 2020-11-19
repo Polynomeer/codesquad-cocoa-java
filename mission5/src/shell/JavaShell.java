@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import clock.ClockRunner;
 import clock.HangulClock;
 
 public class JavaShell {
@@ -16,7 +17,7 @@ public class JavaShell {
     public static final int ERROR_CODE_01 = 1; // exceeed command length
     public static boolean EXIT_CODE = false;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    private static void main(String[] args) throws IOException, InterruptedException {
         JavaShell javaShell = new JavaShell();
         Scanner sc = new Scanner(System.in);
 
@@ -37,7 +38,7 @@ public class JavaShell {
         }
     }
 
-    public void tokenize(String input, List<String> command) {
+    private void tokenize(String input, List<String> command) {
         StringTokenizer st = new StringTokenizer(input, " ");
         while (st.hasMoreTokens()) {
             String token = st.nextToken().toString();
@@ -45,10 +46,10 @@ public class JavaShell {
         }
     }
 
-    public void parse(List<String> command) {
+    private void parse(List<String> command) {
         for (String cmd : command) {
             if (cmd.equals("hclock")) {
-                runClock();
+                ClockRunner.runClock();
             }
             if (cmd.equals("q")) {
                 EXIT_CODE = true;
@@ -56,7 +57,7 @@ public class JavaShell {
         }
     }
 
-    public int checkValidity(List<String> command) {
+    private int checkValidity(List<String> command) {
         if (command.size() > MAX_CMD) {
             System.out.println("Exceeded command maximum length..");
             return ERROR_CODE_01;
@@ -64,7 +65,7 @@ public class JavaShell {
         return 0; // no error
     }
 
-    public void runByProcessBuilder(List<String> command) throws IOException, InterruptedException {
+    private void runByProcessBuilder(List<String> command) throws IOException, InterruptedException {
         ProcessBuilder builder = new ProcessBuilder(command);
         Process process = builder.start();
         printStream(process);
@@ -77,23 +78,11 @@ public class JavaShell {
         }
     }
 
-    public void copyToOutput(InputStream input, OutputStream output) throws IOException {
+    private void copyToOutput(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[1024];
         int n = 0;
         while ((n = input.read(buffer)) != -1) {
             output.write(buffer, 0, n);
-        }
-    }
-
-    public static void runClock() {
-        while (true) {
-            try {
-                HangulClock.clearScreen();
-                HangulClock.printScreen(HangulClock.getCalendar());
-                Thread.sleep(60000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 

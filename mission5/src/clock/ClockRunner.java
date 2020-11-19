@@ -2,7 +2,7 @@ package clock;
 
 import java.util.Scanner;
 
-public class ClockExample {
+public class ClockRunner {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class ClockExample {
         sc.close();
     }
 
-    private static void runCalendar(String[] args) {
+    public static void runCalendar(String[] args) {
         MyCalendar myCalendar = new MyCalendar();
         if (args.length == 1) {
             myCalendar.printCalendar();
@@ -47,7 +47,7 @@ public class ClockExample {
             try {
                 hangulClock.clearScreen();
                 hangulClock.printScreen(hangulClock.getCalendar());
-                Thread.sleep(60000);
+                Thread.sleep(60 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

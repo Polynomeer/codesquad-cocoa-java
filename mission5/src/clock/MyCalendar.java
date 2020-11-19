@@ -14,7 +14,6 @@ public class MyCalendar {
     private Date date;
     private boolean isDateChosen = true;
 
-
     public MyCalendar() {
         this.calendar = new GregorianCalendar();
         calendar.set(Calendar.DAY_OF_MONTH, 1); //Set the day of month to 1
@@ -25,13 +24,13 @@ public class MyCalendar {
         this.daysInMonth = calendar.getActualMaximum(calendar.DAY_OF_MONTH);
     }
 
-    public void printCalendar() {
+    void printCalendar() {
         printColumn();
         printSpace();
         printDays();
     }
 
-    public void printCalendar(int year, int month) {
+    void printCalendar(int year, int month) {
         this.isDateChosen = false;
         this.calendar.set(year, month - 1, 0);
         calendar.set(Calendar.DAY_OF_MONTH, 1); //Set the day of month to 1
@@ -40,7 +39,7 @@ public class MyCalendar {
         printCalendar();
     }
 
-    public void printCalendar(int year) {
+    void printCalendar(int year) {
         this.isDateChosen = false;
         for (int m = 0; m < 12; m++) {
             this.calendar.set(year, m, 0);

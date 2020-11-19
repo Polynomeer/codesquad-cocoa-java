@@ -28,11 +28,11 @@ public class HangulClock {
             {"오2", "오3", "칠", "팔", "구", "분"}};
     private static boolean[][] clockSet = new boolean[6][6];
 
-    public static Calendar getCalendar() {
+    static Calendar getCalendar() {
         return calendar;
     }
 
-    public static void printScreen(Calendar calendar) {
+    static void printScreen(Calendar calendar) {
         date.setTime(System.currentTimeMillis());
         calendar.setTime(date);
         int hour = calendar.get(calendar.HOUR_OF_DAY);
@@ -57,7 +57,7 @@ public class HangulClock {
         System.out.println();
     }
 
-    public static void setClock(int hour, int minute) {
+    private static void setClock(int hour, int minute) {
         String[] hourString = hours[hour];
         String[] minuteString = minutes[minute];
 
@@ -93,12 +93,12 @@ public class HangulClock {
         }
     }
 
-    public static void clearScreen() {
+    static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    public static void initClockSet() {
+    private static void initClockSet() {
         Arrays.stream(clockSet).forEach(a -> Arrays.fill(a, false));
         clockSet[2][5] = true; // 시 : default set is true
         clockSet[5][5] = true; // 분 : default set is true
