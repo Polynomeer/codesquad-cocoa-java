@@ -9,40 +9,36 @@ public class LedgerDAO {
 
     private static ArrayList<LedgerDTO> ledgerList;
 
-    public LedgerDAO() {
+    public LedgerDAO() throws FileNotFoundException {
         ledgerList = loadData();
     }
 
-    public ArrayList<LedgerDTO> loadData() { // access and load data from file
+    public ArrayList<LedgerDTO> loadData() throws FileNotFoundException { // access and load data from file
         ledgerList = new ArrayList<>();
-        try {
-            File file = new File("./data.txt"); // create File instance
-            Scanner sc = new Scanner(file); // read file by Scanner
+        File file = new File("./data.txt"); // create File instance
+        Scanner sc = new Scanner(file); // read file by Scanner
 
-            while (sc.hasNextLine()) {
-                String[] line = sc.nextLine().split(" ");
-                if (line == null) break; // last enter line has no contents
-                int id = Integer.parseInt(line[0]);
-                String date = line[1];
-                String type = line[2];
-                String summary = line[3];
-                int revenue = Integer.parseInt(line[4]);
-                int expenditure = Integer.parseInt(line[5]);
-                int balance = Integer.parseInt(line[6]);
+        while (sc.hasNextLine()) {
+            String[] line = sc.nextLine().split(" ");
+            if (line == null) break; // last enter line has no contents
+            int id = Integer.parseInt(line[0]);
+            String date = line[1];
+            String type = line[2];
+            String summary = line[3];
+            int revenue = Integer.parseInt(line[4]);
+            int expenditure = Integer.parseInt(line[5]);
+            int balance = Integer.parseInt(line[6]);
 
-                LedgerDTO ledgerDTO = new LedgerDTO(id, date, type, summary, revenue, expenditure, balance);
-                System.out.println(ledgerDTO);
-                ledgerList.add(ledgerDTO);
-            }
-            sc.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LedgerDTO ledgerDTO = new LedgerDTO(id, date, type, summary, revenue, expenditure, balance);
+            System.out.println(ledgerDTO);
+            ledgerList.add(ledgerDTO);
         }
+        sc.close();
+
         return ledgerList;
     }
 
-    public void insert(LedgerDTO ledgerDTO) {
+    public void insert(LedgerDTO ledgerDTO) throws FileNotFoundException {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", true));
             bw.write(ledgerDTO.toString());
@@ -73,7 +69,8 @@ public class LedgerDAO {
             Collections.sort(ledgerList);
         }
     }
-    public void selectAll(){
+
+    public void selectAll() {
         for (LedgerDTO l : ledgerList) {
             int balance = 0;
             if (l == null) break;
@@ -83,47 +80,42 @@ public class LedgerDAO {
         }
     }
 
-    public void update(LedgerDTO ledgerDTO) {
-        try { // update in ArrayList, and rewrite to data file
-            BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
-            int idx = 0;
-            for (LedgerDTO l : ledgerList){ // find ledger which matches id
-                if (l.getId() == ledgerDTO.getId()) { // if id matches, update data
-                    ledgerList.set(idx, ledgerDTO);
-                    break;
-                }
-                idx++;
+    public void update(LedgerDTO ledgerDTO) throws IOException {
+        // update in ArrayList, and rewrite to data file
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
+        int idx = 0;
+        for (LedgerDTO l : ledgerList) { // find ledger which matches id
+            if (l.getId() == ledgerDTO.getId()) { // if id matches, update data
+                ledgerList.set(idx, ledgerDTO);
+                break;
             }
-            for (LedgerDTO l : ledgerList) { // rewrite updated ledger list
-                bw.write(l.toString());
-                bw.newLine();
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            idx++;
         }
+        for (LedgerDTO l : ledgerList) { // rewrite updated ledger list
+            bw.write(l.toString());
+            bw.newLine();
+        }
+        bw.close();
+
         ledgerList = this.loadData();
     }
 
-    public void delete(int id) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
-            int idx = 0;
-            for (LedgerDTO l : ledgerList){ // find ledger which matches id
-                if (l.getId() == id) { // if id matches, update data
-                    ledgerList.remove(id);
-                    break;
-                }
-                idx++;
+    public void delete(int id) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
+        int idx = 0;
+        for (LedgerDTO l : ledgerList) { // find ledger which matches id
+            if (l.getId() == id) { // if id matches, update data
+                ledgerList.remove(id);
+                break;
             }
-            for (LedgerDTO l : ledgerList) { // rewrite updated ledger list
-                bw.write(l.toString());
-                bw.newLine();
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            idx++;
         }
+        for (LedgerDTO l : ledgerList) { // rewrite updated ledger list
+            bw.write(l.toString());
+            bw.newLine();
+        }
+        bw.close();
+
         ledgerList = this.loadData();
     }
 

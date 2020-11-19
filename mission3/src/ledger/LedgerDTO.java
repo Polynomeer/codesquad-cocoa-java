@@ -23,48 +23,24 @@ public class LedgerDTO implements Comparable<LedgerDTO> {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getSummary() {
         return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
     }
 
     public int getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(int revenue) {
-        this.revenue = revenue;
-    }
-
     public int getExpenditure() {
         return expenditure;
-    }
-
-    public void setExpenditure(int expenditure) {
-        this.expenditure = expenditure;
     }
 
     @Override
