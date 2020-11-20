@@ -3,19 +3,19 @@ package oddeven;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Handler {
+public class Game {
 
-    private Scanner sc;
-    private Random rd;
+    private final Scanner sc;
+    private final Random rd;
 
-    public Handler(Scanner sc) {
+    public Game(Scanner sc, Random rd) {
         this.sc = sc;
-        this.rd = new Random();
+        this.rd = rd;
     }
 
-    public void handle(){
+    public void play(){
         Player player = new Player("", 100);
-        Player[] rivals = new Player[OddEven.MAX_RIVAL];
+        Player[] rivals = new Player[OddEvenMain.MAX_RIVAL];
 
         System.out.print("Enter your name : ");
         String name = sc.next();
@@ -29,7 +29,7 @@ public class Handler {
         int round = 0;
         int turn = 1;
 
-        while (!OddEven.isExit && round < 8) {
+        while (!OddEvenMain.isExit && round < 8) {
             if (rivals[round] == null) {
                 makeRival(round, player.getMoney(), rivals);
             }
@@ -48,7 +48,7 @@ public class Handler {
 
             if (player.getMoney() == 0) {
                 printGameOver(turn, player, rivals);
-                OddEven.isExit = true;
+                OddEvenMain.isExit = true;
             }
             if (rivals[round].getMoney() == 0) {
                 round++;
@@ -83,13 +83,13 @@ public class Handler {
 
         if (choice == 'o' && isOdd == true) {
             System.out.println("Correct!! It's odd number!!");
-            player.winMoney(rival.loseMoney(betting));
+            player.winMoney(rival, betting);
         } else if (choice == 'e' && isOdd == false) {
             System.out.println("Correct!! It's even number!!");
-            player.winMoney(rival.loseMoney(betting));
+            player.winMoney(rival, betting);
         } else {
             System.out.println("Wrong!! You lost money..");
-            rival.winMoney(player.loseMoney(betting));
+            rival.winMoney(player, betting);
         }
     }
 

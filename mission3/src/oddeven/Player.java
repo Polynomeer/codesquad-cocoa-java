@@ -31,11 +31,11 @@ public class Player {
         return money;
     }
 
-    public void winMoney(int betting){
+    public void winMoney(Player rival, int betting){
         this.money += betting;
+        rival.loseMoney(betting);
     }
-    public int loseMoney(int betting) {
+    public void loseMoney(int betting) {
         this.money -= betting;
-        return betting;
     }
 }
