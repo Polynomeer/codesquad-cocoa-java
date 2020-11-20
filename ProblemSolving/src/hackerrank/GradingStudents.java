@@ -13,7 +13,7 @@ import java.util.stream.*;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-class Result {
+class GradingStudentsResult {
     public static List<Integer> gradingStudents(List<Integer> grades) {
         List<Integer> finalGrades = new ArrayList<>();
         int idx = 0;
@@ -61,7 +61,7 @@ public class GradingStudents {
                 .map(Integer::parseInt)
                 .collect(toList());
 
-        List<Integer> result = Result.gradingStudents(grades);
+        List<Integer> result = GradingStudentsResult.gradingStudents(grades);
 
         bufferedWriter.write(
                 result.stream()
