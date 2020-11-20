@@ -13,7 +13,7 @@ public class Game {
         this.rd = rd;
     }
 
-    public void play(){
+    public void play() {
         Player player = new Player("", 100);
         Player[] rivals = new Player[OddEvenMain.MAX_RIVAL];
 
@@ -30,30 +30,32 @@ public class Game {
         int turn = 1;
 
         while (!OddEvenMain.isExit && round < 8) {
-            if (rivals[round] == null) {
-                makeRival(round, player.getMoney(), rivals);
-            }
-            System.out.println("\n⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
-            System.out.println("• Round " + (round + 1) + "\t\t\t\t\t Turn " + turn);
-            System.out.println("• Odd or Even? ");
-            System.out.println("• " + player.getName() + "'s money : " + player.getMoney());
-            System.out.println("• " + rivals[round].getName() + "'s money : " + rivals[round].getMoney());
-            System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
-
-            int number = rd.nextInt(20) + 1;
-            System.out.println("number is " + number);
-
+            int number = initRound(player, rivals, round, turn);
             turn++;
-            betMoney(player, rivals[round], number);
 
-            if (player.getMoney() == 0) {
-                printGameOver(turn, player, rivals);
-                OddEvenMain.isExit = true;
-            }
+            betMoney(player, rivals[round], number);
+            checkGameOver(turn, player, rivals);
+
             if (rivals[round].getMoney() == 0) {
                 round++;
             }
         }
+    }
+
+    private int initRound(Player player, Player[] rivals, int round, int turn) {
+        if (rivals[round] == null) {
+            makeRival(round, player.getMoney(), rivals);
+        }
+        System.out.println("\n⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
+        System.out.println("• Round " + (round + 1) + "\t\t\t\t\t Turn " + turn);
+        System.out.println("• Odd or Even? ");
+        System.out.println("• " + player.getName() + "'s money : " + player.getMoney());
+        System.out.println("• " + rivals[round].getName() + "'s money : " + rivals[round].getMoney());
+        System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
+
+        int number = rd.nextInt(20) + 1;
+        System.out.println("number is " + number);
+        return number;
     }
 
     private void betMoney(Player player, Player rival, int number) {
@@ -80,11 +82,8 @@ public class Game {
     private void checkWinner(Player player, Player rival, int number, char choice, int betting) {
         boolean isOdd = number % 2 == 1;
 
-        if (choice == 'o' && isOdd == true) {
-            System.out.println("Correct!! It's odd number!!");
-            player.winMoney(rival, betting);
-        } else if (choice == 'e' && isOdd == false) {
-            System.out.println("Correct!! It's even number!!");
+        if ((choice == 'o' && isOdd == true) || (choice == 'e' && isOdd == false)) {
+            System.out.println("Correct!! It's " + (isOdd == true ? "odd" : "even") + " number!!");
             player.winMoney(rival, betting);
         } else {
             System.out.println("Wrong!! You lost money..");
@@ -92,10 +91,13 @@ public class Game {
         }
     }
 
-    private void printGameOver(int turn, Player player, Player[] rivals) {
-        System.out.println("\n[Game Over]");
-        System.out.println("✓ Turn " + turn);
-        System.out.println("✓ " + player.getName() + "'s money is " + player.getMoney());
+    private void checkGameOver(int turn, Player player, Player[] rivals) {
+        if (player.getMoney() == 0) {
+            System.out.println("\n[Game Over]");
+            System.out.println("✓ Turn " + turn);
+            System.out.println("✓ " + player.getName() + "'s money is " + player.getMoney());
+            OddEvenMain.isExit = true;
+        }
     }
 
     private void makeRival(int round, int playerMoney, Player[] rivals) {
