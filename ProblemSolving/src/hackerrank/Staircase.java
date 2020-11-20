@@ -10,10 +10,16 @@ import java.util.regex.*;
 
 public class Staircase {
 
-    // Complete the staircase function below.
     static void staircase(int n) {
-
-
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                System.out.print(" ");
+            }
+            for (int j = n - i - 1; j < n; j++) {
+                System.out.print("#");
+            }
+            System.out.println();
+        }
     }
 
     private static final Scanner scanner = new Scanner(System.in);
