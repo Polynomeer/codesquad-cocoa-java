@@ -14,15 +14,24 @@ import static java.util.stream.Collectors.toList;
 
 public class CompareTheTriplets {
 
-    // Complete the compareTriplets function below.
     static List<Integer> compareTriplets(List<Integer> a, List<Integer> b) {
         List<Integer> answer = new ArrayList<>();
+        int aliceScore = 0;
+        int bobScore = 0;
+
+        for (int i=0; i< a.size(); i++){
+            if (a.get(i) > b.get(i)) aliceScore++;
+            if (b.get(i) > a.get(i)) bobScore++;
+        }
+        answer.add(aliceScore);
+        answer.add(bobScore);
+
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("./output.txt")));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("./output.txt"));
 
         List<Integer> a = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
                 .map(Integer::parseInt)
