@@ -62,24 +62,23 @@ public class Game {
         choice = Character.toLowerCase(choice);
 
         boolean valid = false;
+        int betting = 0;
 
         while (!valid) {
             System.out.print("How much bet do you want? ");
-            int betting = sc.nextInt();
+            betting = sc.nextInt();
 
             if (betting > Math.min(player.getMoney(), rival.getMoney())) {
                 System.out.println("Your betting money exceed maximum value.");
             } else {
-                player.setBetting(betting);
                 valid = true;
             }
         }
-        checkWinner(player, rival, number, choice);
+        checkWinner(player, rival, number, choice, betting);
     }
 
-    private void checkWinner(Player player, Player rival, int number, char choice) {
+    private void checkWinner(Player player, Player rival, int number, char choice, int betting) {
         boolean isOdd = number % 2 == 1;
-        int betting = player.getBetting();
 
         if (choice == 'o' && isOdd == true) {
             System.out.println("Correct!! It's odd number!!");
