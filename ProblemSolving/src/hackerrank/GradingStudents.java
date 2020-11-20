@@ -9,21 +9,35 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
+
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 class Result {
-
-    /*
-     * Complete the 'gradingStudents' function below.
-     *
-     * The function is expected to return an INTEGER_ARRAY.
-     * The function accepts INTEGER_ARRAY grades as parameter.
-     */
-
     public static List<Integer> gradingStudents(List<Integer> grades) {
-        // Write your code here
-        return grades;
+        List<Integer> finalGrades = new ArrayList<>();
+        int idx = 0;
+
+        for (int grade : grades) {
+            finalGrades.add(idx++, checkGrade(grade));
+        }
+
+        return finalGrades;
+    }
+
+    private static int checkGrade(int grade) {
+        if (grade <= 40 - 3) return grade;
+
+        int count = 0;
+        for (int tempGrade = grade; count < 5; count++, tempGrade++) {
+            if (tempGrade % 5 == 0) {
+                if (count < 3) {
+                    grade = tempGrade;
+                }
+                break;
+            }
+        }
+        return grade;
     }
 
 }
@@ -31,7 +45,8 @@ class Result {
 public class GradingStudents {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("./output.txt"));
+
 
         int gradesCount = Integer.parseInt(bufferedReader.readLine().trim());
 
