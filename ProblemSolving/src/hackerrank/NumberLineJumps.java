@@ -10,10 +10,15 @@ import java.util.regex.*;
 
 public class NumberLineJumps {
 
-    // Complete the kangaroo function below.
     static String kangaroo(int x1, int v1, int x2, int v2) {
-        String answer = "";
-        return answer;
+        int precedence = x1 > x2 ? 1 : 2;
+
+        while (precedence == (x1 > x2 ? 1 : 2)) {
+            x1 += v1;
+            x2 += v2;
+            if (x1 == x2) return "YES";
+        }
+        return "NO";
     }
 
     private static final Scanner scanner = new Scanner(System.in);
