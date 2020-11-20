@@ -10,16 +10,19 @@ import java.util.regex.*;
 
 public class AVeryBigSum {
 
-    // Complete the aVeryBigSum function below.
     static long aVeryBigSum(long[] ar) {
         long answer = 0;
+        for (long bigNum : ar){
+            answer += bigNum;
+        }
+
         return answer;
     }
 
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("./output.txt"));
 
         int arCount = scanner.nextInt();
         scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
