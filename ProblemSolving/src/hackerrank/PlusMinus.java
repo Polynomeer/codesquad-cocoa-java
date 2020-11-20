@@ -10,10 +10,24 @@ import java.util.regex.*;
 
 public class PlusMinus {
 
-    // Complete the plusMinus function below.
     static void plusMinus(int[] arr) {
+        double positives = 0;   // proportion of positive values
+        double negatives = 0;  // proportion of negative values
+        double zeros = 0; // proportion of zeros
 
+        for (int num : arr) {
+            if (num > 0) positives++;
+            else if (num < 0) negatives++;
+            else zeros++;
+        }
 
+        positives /= arr.length;
+        negatives /= arr.length;
+        zeros /= arr.length;
+
+        System.out.println(String.format("%.6f", positives));
+        System.out.println(String.format("%.6f", negatives));
+        System.out.println(String.format("%.6f", zeros));
     }
 
     private static final Scanner scanner = new Scanner(System.in);
