@@ -4,11 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 class PaintingBoard extends Frame implements MouseMotionListener {
+    private final int COLOR_TYPE = 4;
     int x = 0;
     int y = 0;
 
     Image img = null;
     Graphics gImg = null;
+
+    CheckboxGroup group;
+    Checkbox cb[] = new Checkbox[COLOR_TYPE];
 
     public static void main(String[] args) {
         new PaintingBoard("Painting Board");
@@ -23,14 +27,50 @@ class PaintingBoard extends Frame implements MouseMotionListener {
             }
         });
 
+        initCheckbox();
+
         // Frame을 (100, 100)의 위치에 width 500, height 500 크기로 보이게 한다.
         setBounds(100, 100, 500, 500);
         setVisible(true);
 
         img = createImage(500, 500);
         gImg = img.getGraphics();
-        gImg.drawString("왼쪽버튼을 누른 채로 마우스를 움직여보세요.", 10, 50);
         repaint();
+    }
+
+    private void initCheckbox() {
+        group = new CheckboxGroup();
+        cb[0] = new Checkbox("black", group, true);
+        cb[1] = new Checkbox("red", group, false);
+        cb[2] = new Checkbox("green", group, false);
+        cb[3] = new Checkbox("blue", group, false);
+
+        for (int i = 0; i < COLOR_TYPE; i++) {
+            cb[i].addItemListener(new EventHandler());
+            add(cb[i]);
+        }
+
+        setLayout(new FlowLayout());
+    }
+
+    class EventHandler implements ItemListener {
+
+        public void itemStateChanged(ItemEvent e) {
+
+            Checkbox cb = (Checkbox) e.getSource();
+            String color = cb.getLabel();
+
+            if (color.equals("black")) {
+                gImg.setColor(Color.black);
+            } else if (color.equals("red")) {
+                gImg.setColor(Color.red);
+            } else if (color.equals("green")) {
+                gImg.setColor(Color.green);
+            } else {
+                gImg.setColor(Color.blue);
+            }
+        }
+
     }
 
     public void paint(Graphics g) {
