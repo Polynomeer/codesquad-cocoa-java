@@ -17,8 +17,7 @@ public class Player {
         return money;
     }
 
-    @Override
-    public String toString() {
+    public String getPlayer() {
         return  this.name + "'s money is " + this.money;
     }
 

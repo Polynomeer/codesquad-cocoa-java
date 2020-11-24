@@ -49,8 +49,8 @@ public class Game {
         System.out.println("\n⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
         System.out.println("• Round " + (round + 1) + "\t\t\t\t\t Turn " + turn);
         System.out.println("• Odd or Even? ");
-        System.out.println("• " + player.toString());
-        System.out.println("• " + rivals[round].toString());
+        System.out.println("• " + player.getPlayer());
+        System.out.println("• " + rivals[round].getPlayer());
         System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
 
         int number = rd.nextInt(20) + 1;
@@ -95,8 +95,8 @@ public class Game {
         if (player.getMoney() == 0) {
             System.out.println("\n[Game Over]");
             System.out.println("✓ Turn " + turn);
-            System.out.println("✓ " + player.toString());
-            System.out.println("✓ " + rival.toString());
+            System.out.println("✓ " + player.getPlayer());
+            System.out.println("✓ " + rival.getPlayer());
             OddEvenMain.isExit = true;
         }
     }
