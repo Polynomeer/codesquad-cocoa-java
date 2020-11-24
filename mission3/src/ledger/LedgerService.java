@@ -3,6 +3,9 @@ package ledger;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class LedgerService {
@@ -10,13 +13,13 @@ public class LedgerService {
     private static LedgerDAO ledgerDAO;
     private static Scanner sc;
 
-    public LedgerService() throws FileNotFoundException {
+    public LedgerService() throws FileNotFoundException, ParseException {
         ledgerDAO = new LedgerDAO();
         File file = new File("./data.txt"); // create File instance
         sc = new Scanner(file); // read file by Scanner
     }
 
-    public void process() throws IOException {
+    public void process() throws IOException, ParseException {
         int index = 0;
         // get index from last line
         while (sc.hasNextLine()) {
@@ -53,9 +56,10 @@ public class LedgerService {
 
     }
 
-    private static LedgerDTO getInputByKeyboard(int id) {
+    private static LedgerDTO getInputByKeyboard(int id) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         System.out.print("date : ");
-        String date = sc.next();
+        Date date = format.parse(sc.next());
         System.out.print("type : ");
         String type = sc.next();
         System.out.print("summary : ");
@@ -68,7 +72,7 @@ public class LedgerService {
         return new LedgerDTO(id, date, type, summary, revenue, expenditure, 0);
     }
 
-    private static void inputData(int id) throws FileNotFoundException {
+    private static void inputData(int id) throws FileNotFoundException, ParseException {
         LedgerDTO ledgerDTO = getInputByKeyboard(id);
         ledgerDAO.insert(ledgerDTO);
     }
@@ -89,7 +93,7 @@ public class LedgerService {
         ledgerDAO.select(sortBy, sortType);
     }
 
-    private static void modifyData() throws IOException {
+    private static void modifyData() throws IOException, ParseException {
         sc = new Scanner(System.in);
         System.out.print("id to modify : ");
         int id = sc.nextInt();

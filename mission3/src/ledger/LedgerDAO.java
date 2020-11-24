@@ -1,28 +1,32 @@
 package ledger;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Scanner;
 
 public class LedgerDAO {
 
     private static ArrayList<LedgerDTO> ledgerList;
 
-    public LedgerDAO() throws FileNotFoundException {
+    public LedgerDAO() throws FileNotFoundException, ParseException {
         ledgerList = loadData();
     }
 
-    public ArrayList<LedgerDTO> loadData() throws FileNotFoundException { // access and load data from file
+    public ArrayList<LedgerDTO> loadData() throws FileNotFoundException, ParseException { // access and load data from file
         ledgerList = new ArrayList<>();
         File file = new File("./data.txt"); // create File instance
         Scanner sc = new Scanner(file); // read file by Scanner
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 
         while (sc.hasNextLine()) {
             String[] line = sc.nextLine().split(" ");
             if (line == null) continue; // last enter line has no contents
             int id = Integer.parseInt(line[0]);
-            String date = line[1];
+            Date date = format.parse(line[1]);
             String type = line[2];
             String summary = line[3];
             int revenue = Integer.parseInt(line[4]);
@@ -38,7 +42,7 @@ public class LedgerDAO {
         return ledgerList;
     }
 
-    public void insert(LedgerDTO ledgerDTO) throws FileNotFoundException {
+    public void insert(LedgerDTO ledgerDTO) throws FileNotFoundException, ParseException {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", true));
             bw.write(ledgerDTO.toString());
@@ -96,8 +100,6 @@ public class LedgerDAO {
             bw.newLine();
         }
         bw.close();
-
-        ledgerList = this.loadData();
     }
 
     public void delete(int id) throws IOException {
@@ -115,8 +117,6 @@ public class LedgerDAO {
             bw.newLine();
         }
         bw.close();
-
-        ledgerList = this.loadData();
     }
 
 }

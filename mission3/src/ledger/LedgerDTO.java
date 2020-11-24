@@ -1,15 +1,17 @@
 package ledger;
 
+import java.util.Date;
+
 public class LedgerDTO implements Comparable<LedgerDTO> {
     private int id;
-    private String date;
+    private Date date;
     private String type;
     private String summary;
     private int revenue;
     private int expenditure;
     private int balance;
 
-    public LedgerDTO(int id, String date, String type, String summary, int revenue, int expenditure, int balance) {
+    public LedgerDTO(int id, Date date, String type, String summary, int revenue, int expenditure, int balance) {
         this.id = id;
         this.date = date;
         this.type = type;
@@ -27,7 +29,7 @@ public class LedgerDTO implements Comparable<LedgerDTO> {
         return type;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -50,6 +52,6 @@ public class LedgerDTO implements Comparable<LedgerDTO> {
 
     @Override
     public int compareTo(LedgerDTO ledgerDTO) {
-        return this.getRevenue() > ledgerDTO.getRevenue() ? 1 : -1;
-    } // how can I sort by other?
+        return this.date.compareTo(ledgerDTO.date);
+    }
 }
