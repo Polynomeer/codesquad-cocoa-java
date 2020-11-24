@@ -34,7 +34,7 @@ public class Game {
             turn++;
 
             betMoney(player, rivals[round], number);
-            checkGameOver(turn, player, rivals);
+            checkGameOver(turn, player, rivals[round]);
 
             if (rivals[round].getMoney() == 0) {
                 round++;
@@ -49,8 +49,8 @@ public class Game {
         System.out.println("\n⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
         System.out.println("• Round " + (round + 1) + "\t\t\t\t\t Turn " + turn);
         System.out.println("• Odd or Even? ");
-        System.out.println("• " + player.getName() + "'s money : " + player.getMoney());
-        System.out.println("• " + rivals[round].getName() + "'s money : " + rivals[round].getMoney());
+        System.out.println("• " + player.toString());
+        System.out.println("• " + rivals[round].toString());
         System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
 
         int number = rd.nextInt(20) + 1;
@@ -91,11 +91,12 @@ public class Game {
         }
     }
 
-    private void checkGameOver(int turn, Player player, Player[] rivals) {
+    private void checkGameOver(int turn, Player player, Player rival) {
         if (player.getMoney() == 0) {
             System.out.println("\n[Game Over]");
             System.out.println("✓ Turn " + turn);
-            System.out.println("✓ " + player.getName() + "'s money is " + player.getMoney());
+            System.out.println("✓ " + player.toString());
+            System.out.println("✓ " + rival.toString());
             OddEvenMain.isExit = true;
         }
     }

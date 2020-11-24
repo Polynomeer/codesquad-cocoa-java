@@ -9,16 +9,17 @@ public class Player {
         this.money = money;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
     public int getMoney() {
         return money;
+    }
+
+    @Override
+    public String toString() {
+        return  this.name + "'s money is " + this.money;
     }
 
     public void winMoney(Player rival, int betting){
