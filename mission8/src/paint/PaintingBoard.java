@@ -1,7 +1,10 @@
 package paint;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.stream.Collectors;
 
 enum DRAW_TYPE {
@@ -41,16 +44,9 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         initCheckbox();
         initLocation();
         initButton();
+        initMenuBar();
 
-        addMouseMotionListener(this); // 자기자신의 인스턴스를 Frame의 Listener로 등록한다.
-        addMouseListener(this); // 자기자신의 인스턴스를 Frame의 MouseListener로 등록한다.
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                System.exit(0);
-            }
-        });
-        bt_clear.addActionListener(this);
-
+        addListeners();
         // Frame을 (100, 100)의 위치에 width 500, height 500 크기로 보이게 한다.
         setBounds(100, 100, 500, 500);
         setVisible(true);
@@ -58,6 +54,57 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         img = createImage(500, 500);
         gImg = img.getGraphics();
         repaint();
+    }
+
+    private void addListeners(){
+        addMouseMotionListener(this); // 자기자신의 인스턴스를 Frame의 Listener로 등록한다.
+        addMouseListener(this); // 자기자신의 인스턴스를 Frame의 MouseListener로 등록한다.
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+
+        bt_clear.addActionListener(this);
+    }
+
+    private void initMenuBar() {
+        MenuBar mb = new MenuBar();
+        Menu mFile = new Menu("File");
+        MenuItem miNew = new MenuItem("New");
+        MenuItem miOpen = new MenuItem("Open");
+        MenuItem miSave = new MenuItem("Save");
+        miSave.setActionCommand("Save");
+        miSave.addActionListener(this);
+        Menu mOthers = new Menu("Others");  // MenuItem이 아니라 Menu임에 주의
+        MenuItem miExit = new MenuItem("Exit");
+
+        mFile.add(miNew);           // Menu에 MenuItem들을 추가한다.
+        mFile.add(miOpen);
+        mFile.add(miSave);
+        mFile.add(mOthers);         // Menu에 Menu를 추가한다.
+        mFile.addSeparator();       // 메뉴 분리선을 넣는다.
+        mFile.add(miExit);
+
+        MenuItem miPrint = new MenuItem("Print ...");
+        MenuItem miPreview = new MenuItem("Print Preview");
+        MenuItem miSetup = new MenuItem("Print Setup ...");
+        mOthers.add(miPrint);
+        mOthers.add(miPreview);
+        mOthers.add(miSetup);
+
+        Menu mEdit = new Menu("Edit");
+        Menu mView = new Menu("View");
+        Menu mHelp = new Menu("Help");
+        CheckboxMenuItem miStatusbar = new CheckboxMenuItem("Statusbar");
+        mView.add(miStatusbar);
+
+        mb.add(mFile);          // MenuBar에 Menu를 추가한다.
+        mb.add(mEdit);
+        mb.add(mView);
+        mb.setHelpMenu(mHelp);  // mHelp를 HelpMenu로 지정한다.
+
+        this.setMenuBar(mb);    // Frame에 MenuBar를 포함시킨다.
     }
 
     private void initButton() {
@@ -136,7 +183,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
 //            g = img.getGraphics();
             Color tempColor = g.getColor();
             g.setColor(SystemColor.window);
-            g.fillRect(0,0,500,500);
+            g.fillRect(0, 0, 500, 500);
             g.setColor(tempColor);  // get back to selected color
 
             repaint();
@@ -222,8 +269,25 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         repaint();
     }
 
+    public void saveImage() {
+        try {
+            BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics2D = image.createGraphics();
+            this.paint(graphics2D);
+            ImageIO.write(image, "jpeg", new File("./image.jpeg"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
     public void actionPerformed(ActionEvent e) {
-        isClear = true;
+        if (e.getActionCommand().equals("Clear")) {
+            isClear = true;
+        }
+        else if(e.getActionCommand().equals("Save")){
+            saveImage();
+        }
         paint(gImg);
     }
 }
