@@ -15,7 +15,7 @@ public class LedgerService {
 
     public LedgerService() throws FileNotFoundException, ParseException {
         ledgerDAO = new LedgerDAO();
-        File file = new File("./data.txt"); // create File instance
+        File file = new File("./data.csv"); // create File instance
         sc = new Scanner(file); // read file by Scanner
     }
 

@@ -18,12 +18,12 @@ public class LedgerDAO {
 
     public ArrayList<LedgerDTO> loadData() throws FileNotFoundException, ParseException { // access and load data from file
         ledgerList = new ArrayList<>();
-        File file = new File("./data.txt"); // create File instance
+        File file = new File("./data.csv"); // create File instance
         Scanner sc = new Scanner(file); // read file by Scanner
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 
         while (sc.hasNextLine()) {
-            String[] line = sc.nextLine().split(" ");
+            String[] line = sc.nextLine().split(",");
             if (line == null) continue; // last enter line has no contents
             int id = Integer.parseInt(line[0]);
             Date date = format.parse(line[1]);
@@ -44,7 +44,7 @@ public class LedgerDAO {
 
     public void insert(LedgerDTO ledgerDTO) throws FileNotFoundException, ParseException {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("./data.csv", true));
             bw.write(ledgerDTO.toString());
             bw.newLine();
             bw.close();
@@ -86,7 +86,7 @@ public class LedgerDAO {
 
     public void update(LedgerDTO ledgerDTO) throws IOException {
         // update in ArrayList, and rewrite to data file
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./data.csv", false));
         int idx = 0;
         for (LedgerDTO ledger : ledgerList) { // find ledger which matches id
             if (ledger.getId() == ledgerDTO.getId()) { // if id matches, update data
@@ -103,7 +103,7 @@ public class LedgerDAO {
     }
 
     public void delete(int id) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./data.txt", false));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./data.csv", false));
         int idx = 0;
         for (LedgerDTO ledger : ledgerList) { // find ledger which matches id
             if (ledger.getId() == id) { // if id matches, update data
