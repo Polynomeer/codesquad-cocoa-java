@@ -1,13 +1,22 @@
 package ledger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserService {
 
-    UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO;
+    private Scanner sc;
+    private List<UserVO> userList;
+
+    public UserService() {
+        userDAO = new UserDAO();
+        sc = new Scanner(System.in);
+        userList = new ArrayList<>();
+    }
 
     private void process(){
-        Scanner sc = new Scanner(System.in);
 
         while (!Main.isExit) {
                 System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
