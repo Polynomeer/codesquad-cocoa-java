@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class LedgerService {
 
-    private static LedgerDAO ledgerDAO;
-    private static Scanner sc;
+    private LedgerDAO ledgerDAO;
+    private Scanner sc;
 
     public LedgerService(String username) throws FileNotFoundException, ParseException {
         ledgerDAO = new LedgerDAO();
@@ -56,7 +56,7 @@ public class LedgerService {
 
     }
 
-    private static LedgerVO getInputByKeyboard(int id) throws ParseException {
+    private LedgerVO getInputByKeyboard(int id) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         System.out.print("date : ");
         Date date = format.parse(sc.next());
@@ -72,12 +72,12 @@ public class LedgerService {
         return new LedgerVO(id, date, type, summary, revenue, expenditure, 0);
     }
 
-    private static void inputData(int id) throws FileNotFoundException, ParseException {
+    private void inputData(int id) throws FileNotFoundException, ParseException {
         LedgerVO ledgerVO = getInputByKeyboard(id);
         ledgerDAO.insert(ledgerVO);
     }
 
-    private static void printData() {
+    private void printData() {
         System.out.print("Do you want to sort data? (Y/N)");
         char choice = sc.next().charAt(0);
         choice = Character.toLowerCase(choice);
@@ -93,7 +93,7 @@ public class LedgerService {
         ledgerDAO.select(sortBy, sortType);
     }
 
-    private static void modifyData() throws IOException, ParseException {
+    private void modifyData() throws IOException, ParseException {
         sc = new Scanner(System.in);
         System.out.print("id to modify : ");
         int id = sc.nextInt();
@@ -101,7 +101,7 @@ public class LedgerService {
         ledgerDAO.update(ledgerVO);
     }
 
-    private static void deleteData() throws IOException {
+    private void deleteData() throws IOException {
         System.out.print("id to delete : ");
         int id = sc.nextInt();
         ledgerDAO.delete(id);
