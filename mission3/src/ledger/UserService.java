@@ -44,7 +44,7 @@ public class UserService {
 
         if (option == 1){
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
-            System.out.println("                    Your Financial ledger.Ledger");
+            System.out.println("                    Your Financial Ledger");
             System.out.println("Please register your account.");
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
 
@@ -53,9 +53,20 @@ public class UserService {
             System.out.print("user password : ");
             String password = sc.next();
             UserVO userVO = new UserVO(username, password);
+            userList.add(userVO);
         }
         if (option == 2){
+            System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
+            System.out.println("                    Your Financial Ledger");
+            System.out.println("Please input your account.");
+            System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
 
+            System.out.print("user name : ");
+            String username = sc.next();
+            System.out.print("user password : ");
+            String password = sc.next();
+            UserVO userVO = new UserVO(username, password);
+            boolean isValidUser = checkLogin(userVO);
         }
         if (option == 3){
             Main.isExit = true;
@@ -63,6 +74,11 @@ public class UserService {
 
 
         sc.close();
+    }
+
+    private boolean checkLogin(UserVO userVO) {
+//        TODO: checking login process is to be implemented
+        return false;
     }
 
 
