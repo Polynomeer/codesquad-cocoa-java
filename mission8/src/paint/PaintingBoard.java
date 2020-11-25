@@ -11,6 +11,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
     private final int COLOR_TYPE = 4;
     private final int SHAPE_TYPE = 5;
     private DRAW_TYPE drawType = DRAW_TYPE.PEN;
+
     private int x = 0;
     private int y = 0;
     private int startX = 0;
@@ -34,6 +35,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
     public PaintingBoard(String title) {
         super(title);
         addMouseMotionListener(this); // 자기자신의 인스턴스를 Frame의 Listener로 등록한다.
+        addMouseListener(this); // 자기자신의 인스턴스를 Frame의 MouseListener로 등록한다.
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 System.exit(0);
@@ -52,13 +54,14 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
         repaint();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         location = new Label("Mouse Pointer Location : ");
         location.setSize(300, 15);
         location.setLocation(5, 30);
         location.setBackground(Color.gray);
         add(location);
     }
+
     private void initCheckbox() {
         colorGroup = new CheckboxGroup();
         shapeGroup = new CheckboxGroup();
@@ -84,7 +87,6 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
         }
         setLayout(new FlowLayout());
     }
-
 
 
     class EventHandler implements ItemListener {
@@ -124,16 +126,38 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        System.out.println("mouse clicked");
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        startX = e.getX();
+        startY = e.getY();
 
+        if (drawType == DRAW_TYPE.LINE) {
+            System.out.println("mouse pressed");
+            gImg.drawLine(startX, startY, e.getX(), e.getY());
+            repaint();
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        endX = e.getX();
+        endY = e.getY();
+
+        if (drawType == DRAW_TYPE.LINE) {
+            gImg.drawLine(startX, startY, e.getX(), e.getY());
+            repaint();
+        } else if (drawType == DRAW_TYPE.OVAL) {
+            gImg.drawOval(startX, startY, e.getX() - startX, e.getY() - startY);
+            repaint();
+        } else if (drawType == DRAW_TYPE.RECTANGLE) {
+            gImg.drawRect(startX, startY, e.getX() - startX, e.getY() - startY);
+            repaint();
+        } else if (drawType == DRAW_TYPE.CURVE) {
+            repaint();
+        }
 
     }
 
@@ -147,24 +171,26 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
 
     }
 
-    public void mouseMoved(MouseEvent me) {
-        x = me.getX();
-        y = me.getY();
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
         location.setText(" Location : [" + x + ", " + y + "]");
     }
 
-    public void mouseDragged(MouseEvent me) {
-        if (me.getModifiersEx() != MouseEvent.BUTTON1_DOWN_MASK) return;
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if (e.getModifiersEx() != MouseEvent.BUTTON1_DOWN_MASK) return;
 
         if (drawType == DRAW_TYPE.PEN) {
-            gImg.drawLine(x, y, me.getX(), me.getY());
-            x = me.getX();
-            y = me.getY();
-            repaint();
+            gImg.drawLine(x, y, e.getX(), e.getY());
+
         } else if (drawType == DRAW_TYPE.LINE) {
-
+            gImg.drawLine(startX, startY, e.getX(), e.getY());
         }
-
+        x = e.getX();
+        y = e.getY();
+        repaint();
     }
 
 }
