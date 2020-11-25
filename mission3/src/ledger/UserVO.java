@@ -1,14 +1,13 @@
 package ledger;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class UserDTO {
+public class UserVO {
     private String username;
     private String password;
-    private List<LedgerDTO> ledgerList;
+    private List<LedgerVO> ledgerList;
 
-    public UserDTO(String username) {
+    public UserVO(String username) {
         this.username = username;
     }
 

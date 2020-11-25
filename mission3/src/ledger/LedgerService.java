@@ -56,7 +56,7 @@ public class LedgerService {
 
     }
 
-    private static LedgerDTO getInputByKeyboard(int id) throws ParseException {
+    private static LedgerVO getInputByKeyboard(int id) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         System.out.print("date : ");
         Date date = format.parse(sc.next());
@@ -69,12 +69,12 @@ public class LedgerService {
         System.out.print("expenditure : ");
         int expenditure = sc.nextInt();
 
-        return new LedgerDTO(id, date, type, summary, revenue, expenditure, 0);
+        return new LedgerVO(id, date, type, summary, revenue, expenditure, 0);
     }
 
     private static void inputData(int id) throws FileNotFoundException, ParseException {
-        LedgerDTO ledgerDTO = getInputByKeyboard(id);
-        ledgerDAO.insert(ledgerDTO);
+        LedgerVO ledgerVO = getInputByKeyboard(id);
+        ledgerDAO.insert(ledgerVO);
     }
 
     private static void printData() {
@@ -97,8 +97,8 @@ public class LedgerService {
         sc = new Scanner(System.in);
         System.out.print("id to modify : ");
         int id = sc.nextInt();
-        LedgerDTO ledgerDTO = getInputByKeyboard(id);
-        ledgerDAO.update(ledgerDTO);
+        LedgerVO ledgerVO = getInputByKeyboard(id);
+        ledgerDAO.update(ledgerVO);
     }
 
     private static void deleteData() throws IOException {

@@ -2,7 +2,7 @@ package ledger;
 
 import java.util.Date;
 
-public class LedgerDTO implements Comparable<LedgerDTO> {
+public class LedgerVO implements Comparable<LedgerVO> {
     private int id;
     private Date date;
     private String type;
@@ -11,7 +11,7 @@ public class LedgerDTO implements Comparable<LedgerDTO> {
     private int expenditure;
     private int balance;
 
-    public LedgerDTO(int id, Date date, String type, String summary, int revenue, int expenditure, int balance) {
+    public LedgerVO(int id, Date date, String type, String summary, int revenue, int expenditure, int balance) {
         this.id = id;
         this.date = date;
         this.type = type;
@@ -51,7 +51,7 @@ public class LedgerDTO implements Comparable<LedgerDTO> {
     }
 
     @Override
-    public int compareTo(LedgerDTO ledgerDTO) {
-        return this.date.compareTo(ledgerDTO.date);
+    public int compareTo(LedgerVO ledgerVO) {
+        return this.date.compareTo(ledgerVO.date);
     }
 }

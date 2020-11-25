@@ -10,13 +10,13 @@ import java.util.Scanner;
 
 public class LedgerDAO {
 
-    private static ArrayList<LedgerDTO> ledgerList;
+    private static ArrayList<LedgerVO> ledgerList;
 
     public LedgerDAO() throws FileNotFoundException, ParseException {
         ledgerList = loadData();
     }
 
-    public ArrayList<LedgerDTO> loadData() throws FileNotFoundException, ParseException { // access and load data from file
+    public ArrayList<LedgerVO> loadData() throws FileNotFoundException, ParseException { // access and load data from file
         ledgerList = new ArrayList<>();
         File file = new File("./data.csv"); // create File instance
         Scanner sc = new Scanner(file); // read file by Scanner
@@ -33,19 +33,19 @@ public class LedgerDAO {
             int expenditure = Integer.parseInt(line[5]);
             int balance = Integer.parseInt(line[6]);
 
-            LedgerDTO ledgerDTO = new LedgerDTO(id, date, type, summary, revenue, expenditure, balance);
-            System.out.println(ledgerDTO);
-            ledgerList.add(ledgerDTO);
+            LedgerVO ledgerVO = new LedgerVO(id, date, type, summary, revenue, expenditure, balance);
+            System.out.println(ledgerVO);
+            ledgerList.add(ledgerVO);
         }
         sc.close();
 
         return ledgerList;
     }
 
-    public void insert(LedgerDTO ledgerDTO) throws FileNotFoundException, ParseException {
+    public void insert(LedgerVO ledgerVO) throws FileNotFoundException, ParseException {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("./data.csv", true));
-            bw.write(ledgerDTO.toString());
+            bw.write(ledgerVO.toString());
             bw.newLine();
             bw.close();
 
@@ -75,7 +75,7 @@ public class LedgerDAO {
     }
 
     public void selectAll() {
-        for (LedgerDTO ledger : ledgerList) {
+        for (LedgerVO ledger : ledgerList) {
             int balance = 0;
             if (ledger == null) continue;
             balance += ledger.getRevenue() - ledger.getExpenditure();
@@ -84,18 +84,18 @@ public class LedgerDAO {
         }
     }
 
-    public void update(LedgerDTO ledgerDTO) throws IOException {
+    public void update(LedgerVO ledgerVO) throws IOException {
         // update in ArrayList, and rewrite to data file
         BufferedWriter bw = new BufferedWriter(new FileWriter("./data.csv", false));
         int idx = 0;
-        for (LedgerDTO ledger : ledgerList) { // find ledger which matches id
-            if (ledger.getId() == ledgerDTO.getId()) { // if id matches, update data
-                ledgerList.set(idx, ledgerDTO);
+        for (LedgerVO ledger : ledgerList) { // find ledger which matches id
+            if (ledger.getId() == ledgerVO.getId()) { // if id matches, update data
+                ledgerList.set(idx, ledgerVO);
                 break;
             }
             idx++;
         }
-        for (LedgerDTO ledger : ledgerList) { // rewrite updated ledger list
+        for (LedgerVO ledger : ledgerList) { // rewrite updated ledger list
             bw.write(ledger.toString());
             bw.newLine();
         }
@@ -105,14 +105,14 @@ public class LedgerDAO {
     public void delete(int id) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter("./data.csv", false));
         int idx = 0;
-        for (LedgerDTO ledger : ledgerList) { // find ledger which matches id
+        for (LedgerVO ledger : ledgerList) { // find ledger which matches id
             if (ledger.getId() == id) { // if id matches, update data
                 ledgerList.remove(id);
                 break;
             }
             idx++;
         }
-        for (LedgerDTO ledger : ledgerList) { // rewrite updated ledger list
+        for (LedgerVO ledger : ledgerList) { // rewrite updated ledger list
             bw.write(ledger.toString());
             bw.newLine();
         }
