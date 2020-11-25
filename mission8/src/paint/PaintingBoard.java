@@ -2,12 +2,13 @@ package paint;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.stream.Collectors;
 
 enum DRAW_TYPE {
     PEN, LINE, CURVE, RECTANGLE, OVAL
 }
 
-class PaintingBoard extends Frame implements MouseMotionListener, MouseListener {
+class PaintingBoard extends Frame implements MouseMotionListener, MouseListener, ActionListener {
     private final int COLOR_TYPE = 4;
     private final int SHAPE_TYPE = 5;
     private DRAW_TYPE drawType = DRAW_TYPE.PEN;
@@ -18,6 +19,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
     private int startY = 0;
     private int endX = 0;
     private int endY = 0;
+    private boolean isClear = false;
 
     private Image img = null;
     private Graphics gImg = null;
@@ -27,6 +29,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
     private Checkbox cb_shape[] = new Checkbox[SHAPE_TYPE];
 
     private Label location;
+    private Button bt_clear;
 
     public static void main(String[] args) {
         new PaintingBoard("Painting Board");
@@ -34,6 +37,11 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
 
     public PaintingBoard(String title) {
         super(title);
+
+        initCheckbox();
+        initLocation();
+        initButton();
+
         addMouseMotionListener(this); // 자기자신의 인스턴스를 Frame의 Listener로 등록한다.
         addMouseListener(this); // 자기자신의 인스턴스를 Frame의 MouseListener로 등록한다.
         addWindowListener(new WindowAdapter() {
@@ -41,9 +49,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
                 System.exit(0);
             }
         });
-
-        initCheckbox();
-        initLocation();
+        bt_clear.addActionListener(this);
 
         // Frame을 (100, 100)의 위치에 width 500, height 500 크기로 보이게 한다.
         setBounds(100, 100, 500, 500);
@@ -52,6 +58,11 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
         img = createImage(500, 500);
         gImg = img.getGraphics();
         repaint();
+    }
+
+    private void initButton() {
+        bt_clear = new Button("Clear");
+        add(bt_clear);
     }
 
     private void initLocation() {
@@ -121,6 +132,16 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
 
     public void paint(Graphics g) {
         if (img == null) return;
+        if (isClear == true) {
+//            g = img.getGraphics();
+            Color tempColor = g.getColor();
+            g.setColor(SystemColor.window);
+            g.fillRect(0,0,500,500);
+            g.setColor(tempColor);  // get back to selected color
+
+            repaint();
+            isClear = false;
+        }
         g.drawImage(img, 0, 0, this); // 가상화면에 그려진 그림을 Frame에 복사
     }
 
@@ -156,7 +177,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
             gImg.drawRect(startX, startY, e.getX() - startX, e.getY() - startY);
             repaint();
         } else if (drawType == DRAW_TYPE.CURVE) {
-            gImg.drawArc(startX, startY, e.getX(), e.getY(), 0,120);
+            gImg.drawArc(startX, startY, e.getX(), e.getY(), 0, 120);
             repaint();
         }
 
@@ -201,4 +222,8 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
         repaint();
     }
 
+    public void actionPerformed(ActionEvent e) {
+        isClear = true;
+        paint(gImg);
+    }
 }
