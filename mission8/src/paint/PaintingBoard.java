@@ -156,6 +156,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
             gImg.drawRect(startX, startY, e.getX() - startX, e.getY() - startY);
             repaint();
         } else if (drawType == DRAW_TYPE.CURVE) {
+            gImg.drawArc(startX, startY, e.getX(), e.getY(), 0,120);
             repaint();
         }
 
@@ -186,7 +187,14 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener 
             gImg.drawLine(x, y, e.getX(), e.getY());
 
         } else if (drawType == DRAW_TYPE.LINE) {
-            gImg.drawLine(startX, startY, e.getX(), e.getY());
+//            TODO: erase all afterimage after mouseReleased()
+//            gImg.drawLine(startX, startY, e.getX(), e.getY());
+        } else if (drawType == DRAW_TYPE.RECTANGLE) {
+//            gImg.drawRect(startX,startY,e.getX(),e.getY());
+        } else if (drawType == DRAW_TYPE.OVAL) {
+//            gImg.drawOval(startX,startY,e.getX(),e.getY());
+        } else if (drawType == DRAW_TYPE.CURVE) {
+//            gImg.drawArc(startX, startY, e.getX(), e.getY(), 0,120);
         }
         x = e.getX();
         y = e.getY();
