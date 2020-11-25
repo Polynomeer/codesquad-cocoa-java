@@ -69,7 +69,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         location = new Label("Mouse Pointer Location : ");
         location.setSize(300, 15);
         location.setLocation(5, 30);
-        location.setBackground(Color.gray);
+        location.setBackground(Color.lightGray);
         add(location);
     }
 
