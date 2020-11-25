@@ -3,16 +3,29 @@ package paint;
 import java.awt.*;
 import java.awt.event.*;
 
-class PaintingBoard extends Frame implements MouseMotionListener {
+enum DRAW_TYPE {
+    PEN, LINE, CURVE, RECTANGLE, OVAL
+}
+
+class PaintingBoard extends Frame implements MouseMotionListener, MouseListener {
     private final int COLOR_TYPE = 4;
-    int x = 0;
-    int y = 0;
+    private final int SHAPE_TYPE = 5;
+    private DRAW_TYPE drawType = DRAW_TYPE.PEN;
+    private int x = 0;
+    private int y = 0;
+    private int startX = 0;
+    private int startY = 0;
+    private int endX = 0;
+    private int endY = 0;
 
-    Image img = null;
-    Graphics gImg = null;
+    private Image img = null;
+    private Graphics gImg = null;
 
-    CheckboxGroup group;
-    Checkbox cb[] = new Checkbox[COLOR_TYPE];
+    private CheckboxGroup colorGroup, shapeGroup;
+    private Checkbox cb_color[] = new Checkbox[COLOR_TYPE];
+    private Checkbox cb_shape[] = new Checkbox[SHAPE_TYPE];
+
+    private Label location;
 
     public static void main(String[] args) {
         new PaintingBoard("Painting Board");
@@ -20,7 +33,7 @@ class PaintingBoard extends Frame implements MouseMotionListener {
 
     public PaintingBoard(String title) {
         super(title);
-        addMouseMotionListener(this);
+        addMouseMotionListener(this); // 자기자신의 인스턴스를 Frame의 Listener로 등록한다.
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 System.exit(0);
@@ -28,6 +41,7 @@ class PaintingBoard extends Frame implements MouseMotionListener {
         });
 
         initCheckbox();
+        initLocation();
 
         // Frame을 (100, 100)의 위치에 width 500, height 500 크기로 보이게 한다.
         setBounds(100, 100, 500, 500);
@@ -38,36 +52,66 @@ class PaintingBoard extends Frame implements MouseMotionListener {
         repaint();
     }
 
+    private void initLocation(){
+        location = new Label("Mouse Pointer Location : ");
+        location.setSize(300, 15);
+        location.setLocation(5, 30);
+        location.setBackground(Color.gray);
+        add(location);
+    }
     private void initCheckbox() {
-        group = new CheckboxGroup();
-        cb[0] = new Checkbox("black", group, true);
-        cb[1] = new Checkbox("red", group, false);
-        cb[2] = new Checkbox("green", group, false);
-        cb[3] = new Checkbox("blue", group, false);
+        colorGroup = new CheckboxGroup();
+        shapeGroup = new CheckboxGroup();
+        cb_color[0] = new Checkbox("black", colorGroup, true);
+        cb_color[1] = new Checkbox("red", colorGroup, false);
+        cb_color[2] = new Checkbox("green", colorGroup, false);
+        cb_color[3] = new Checkbox("blue", colorGroup, false);
+
+        cb_shape[0] = new Checkbox("pen", shapeGroup, true);
+        cb_shape[1] = new Checkbox("line", shapeGroup, false);
+        cb_shape[2] = new Checkbox("curve", shapeGroup, false);
+        cb_shape[3] = new Checkbox("rectangle", shapeGroup, false);
+        cb_shape[4] = new Checkbox("oval", shapeGroup, false);
 
         for (int i = 0; i < COLOR_TYPE; i++) {
-            cb[i].addItemListener(new EventHandler());
-            add(cb[i]);
+            cb_color[i].addItemListener(new EventHandler());
+            add(cb_color[i]);
         }
 
+        for (int i = 0; i < SHAPE_TYPE; i++) {
+            cb_shape[i].addItemListener(new EventHandler());
+            add(cb_shape[i]);
+        }
         setLayout(new FlowLayout());
     }
+
+
 
     class EventHandler implements ItemListener {
 
         public void itemStateChanged(ItemEvent e) {
 
             Checkbox cb = (Checkbox) e.getSource();
-            String color = cb.getLabel();
+            String checked = cb.getLabel();
 
-            if (color.equals("black")) {
+            if (checked.equals("black")) {
                 gImg.setColor(Color.black);
-            } else if (color.equals("red")) {
+            } else if (checked.equals("red")) {
                 gImg.setColor(Color.red);
-            } else if (color.equals("green")) {
+            } else if (checked.equals("green")) {
                 gImg.setColor(Color.green);
-            } else {
+            } else if (checked.equals("blue")) {
                 gImg.setColor(Color.blue);
+            } else if (checked.equals("pen")) {
+                drawType = DRAW_TYPE.PEN;
+            } else if (checked.equals("line")) {
+                drawType = DRAW_TYPE.LINE;
+            } else if (checked.equals("curve")) {
+                drawType = DRAW_TYPE.CURVE;
+            } else if (checked.equals("rectangle")) {
+                drawType = DRAW_TYPE.RECTANGLE;
+            } else if (checked.equals("oval")) {
+                drawType = DRAW_TYPE.OVAL;
             }
         }
 
@@ -78,17 +122,49 @@ class PaintingBoard extends Frame implements MouseMotionListener {
         g.drawImage(img, 0, 0, this); // 가상화면에 그려진 그림을 Frame에 복사
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
     public void mouseMoved(MouseEvent me) {
         x = me.getX();
         y = me.getY();
+        location.setText(" Location : [" + x + ", " + y + "]");
     }
 
     public void mouseDragged(MouseEvent me) {
         if (me.getModifiersEx() != MouseEvent.BUTTON1_DOWN_MASK) return;
-        gImg.drawLine(x, y, me.getX(), me.getY());
-        x = me.getX();
-        y = me.getY();
-        repaint();
+
+        if (drawType == DRAW_TYPE.PEN) {
+            gImg.drawLine(x, y, me.getX(), me.getY());
+            x = me.getX();
+            y = me.getY();
+            repaint();
+        } else if (drawType == DRAW_TYPE.LINE) {
+
+        }
+
     }
 
 }
