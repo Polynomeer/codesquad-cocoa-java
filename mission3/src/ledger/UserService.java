@@ -8,7 +8,7 @@ public class UserService {
 
     private void process(){
         Scanner sc = new Scanner(System.in);
-        UserVO userVO = new UserVO("user");
+
         while (!Main.isExit) {
                 System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
                 System.out.println("                    Your Financial ledger.Ledger");
@@ -19,9 +19,8 @@ public class UserService {
                 String username = sc.next();
                 System.out.print("user password : ");
                 String password = sc.next();
+                UserVO userVO = new UserVO(username, password);
 
-                userVO.setUsername(username);
-                userVO.setPassword(password);
                 continue;
         }
         sc.close();
