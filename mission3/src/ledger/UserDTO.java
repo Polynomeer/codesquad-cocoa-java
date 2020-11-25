@@ -30,10 +30,7 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return username + "," + password;
     }
 
     public boolean isEmpty() {

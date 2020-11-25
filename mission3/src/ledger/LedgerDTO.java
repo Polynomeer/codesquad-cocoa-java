@@ -47,7 +47,7 @@ public class LedgerDTO implements Comparable<LedgerDTO> {
 
     @Override
     public String toString() {
-        return id + " " + date + " " + type + " " + summary + " " + revenue + " " + expenditure;
+        return id + "," + date + "," + type + "," + summary + "," + revenue + "," + expenditure;
     }
 
     @Override
