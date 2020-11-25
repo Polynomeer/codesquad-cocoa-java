@@ -13,9 +13,9 @@ public class LedgerService {
     private static LedgerDAO ledgerDAO;
     private static Scanner sc;
 
-    public LedgerService() throws FileNotFoundException, ParseException {
+    public LedgerService(String username) throws FileNotFoundException, ParseException {
         ledgerDAO = new LedgerDAO();
-        File file = new File("./data.csv"); // create File instance
+        File file = new File("./" + username + ".csv"); // create File instance
         sc = new Scanner(file); // read file by Scanner
     }
 
@@ -27,7 +27,7 @@ public class LedgerService {
         }
 
         sc = new Scanner(System.in);
-        while (!Main.isExit) {
+        while (!LedgerMain.isExit) {
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
             System.out.println("\t\t" + "'s Financial ledger.Ledger");
             System.out.println("1 : input data, 2 : delete data, 3 : modify data, 4 : print data");
@@ -37,7 +37,7 @@ public class LedgerService {
             int input = sc.nextInt();
             switch (input) {
                 case 0:
-                    Main.isExit = true;
+                    LedgerMain.isExit = true;
                     break;
                 case 1:
                     inputData(++index);

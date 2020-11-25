@@ -26,7 +26,7 @@ public class UserService {
             String username = line[0];
             String password = line[1];
 
-            UserVO userVO = new UserVO(username,password);
+            UserVO userVO = new UserVO(username, password);
             System.out.println(userVO);
             userList.add(userVO);
         }
@@ -34,15 +34,15 @@ public class UserService {
 
     }
 
-    private void process() {
-
+    public String process() {
+        UserVO userVO = null;
         System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
         System.out.println("                    Your Financial Ledger");
         System.out.println("1. sign up / 2. sign in / 3. exit");
         System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
         int option = sc.nextInt();
 
-        if (option == 1){
+        if (option == 1) {
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
             System.out.println("                    Your Financial Ledger");
             System.out.println("Please register your account.");
@@ -52,10 +52,10 @@ public class UserService {
             String username = sc.next();
             System.out.print("user password : ");
             String password = sc.next();
-            UserVO userVO = new UserVO(username, password);
+            userVO = new UserVO(username, password);
             userList.add(userVO);
         }
-        if (option == 2){
+        if (option == 1 || option == 2) {
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
             System.out.println("                    Your Financial Ledger");
             System.out.println("Please input your account.");
@@ -65,15 +65,15 @@ public class UserService {
             String username = sc.next();
             System.out.print("user password : ");
             String password = sc.next();
-            UserVO userVO = new UserVO(username, password);
+            userVO = new UserVO(username, password);
             boolean isValidUser = checkLogin(userVO);
         }
-        if (option == 3){
-            Main.isExit = true;
+        if (option == 3) {
+            LedgerMain.isExit = true;
         }
 
-
         sc.close();
+        return userVO.getUsername();
     }
 
     private boolean checkLogin(UserVO userVO) {
