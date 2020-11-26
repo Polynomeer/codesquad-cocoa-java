@@ -15,7 +15,7 @@ public class LedgerService {
     private String username;
 
     public LedgerService(String username) throws FileNotFoundException, ParseException {
-        ledgerDAO = new LedgerDAO();
+        ledgerDAO = new LedgerDAO(username);
         this.username = username;
         File file = new File("./" + username + ".csv"); // create File instance
         sc = new Scanner(file); // read file by Scanner

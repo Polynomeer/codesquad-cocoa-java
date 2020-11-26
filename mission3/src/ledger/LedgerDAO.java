@@ -10,17 +10,21 @@ import java.util.Scanner;
 
 public class LedgerDAO {
 
-    private static ArrayList<LedgerVO> ledgerList;
+    private ArrayList<LedgerVO> ledgerList;
+    private File file;
+    private Scanner sc;
+    private SimpleDateFormat format;
 
-    public LedgerDAO() throws FileNotFoundException, ParseException {
+    public LedgerDAO(String username) throws FileNotFoundException, ParseException {
+        file = new File("./" + username + ".csv"); // create File instance
+        sc = new Scanner(file); // read file by Scanner
+        format = new SimpleDateFormat("yyyy-mm-dd");
+
         ledgerList = loadData();
     }
 
-    public ArrayList<LedgerVO> loadData() throws FileNotFoundException, ParseException { // access and load data from file
+    public ArrayList<LedgerVO> loadData() throws ParseException { // access and load data from file
         ledgerList = new ArrayList<>();
-        File file = new File("./august.csv"); // create File instance
-        Scanner sc = new Scanner(file); // read file by Scanner
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 
         while (sc.hasNextLine()) {
             String[] line = sc.nextLine().split(",");
@@ -42,7 +46,7 @@ public class LedgerDAO {
         return ledgerList;
     }
 
-    public void insert(LedgerVO ledgerVO) throws FileNotFoundException, ParseException {
+    public void insert(LedgerVO ledgerVO) throws ParseException {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv", true));
             bw.write(ledgerVO.toString());
