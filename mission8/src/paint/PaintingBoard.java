@@ -17,9 +17,9 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
     private final int SHAPE_TYPE = 5;
     private DRAW_TYPE drawType = DRAW_TYPE.PEN;
 
-    Point curPoint = null;
-    Point startPoint = null;
-    Point endPoint = null;
+    Point curPoint;
+    Point startPoint;
+    Point endPoint;
     private boolean isClear = false;
 
     Vector<Point> sv = new Vector<Point>(); // 시작
@@ -190,21 +190,20 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
             repaint();
             isClear = false;
         }
-        g.drawImage(img, 0, 0, this); // 가상화면에 그려진 그림을 Frame에 복사
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paint(g); // 부모 페인트호출
-
-        if (sv.size() != 0) {
-            for (int i = 0; i < se.size(); i++) { //벡터크기만큼
-                Point sp = sv.get(i); // 벡터값을꺼내다
-                Point ep = se.get(i);
-                g.drawLine(sp.x, sp.y, ep.x, ep.y);//그리다
+        if (drawType == DRAW_TYPE.LINE){
+            if (sv.size() != 0) {
+                for (int i = 0; i < se.size(); i++) { //벡터크기만큼
+                    Point sp = sv.get(i); // 벡터값을꺼내다
+                    Point ep = se.get(i);
+                    g.drawLine(sp.x, sp.y, ep.x, ep.y);
+                }
+            }
+            if (startPoint != null){
+                g.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
             }
         }
-        if (startPoint != null)
-            g.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+
+        g.drawImage(img, 0, 0, this); // 가상화면에 그려진 그림을 Frame에 복사
     }
 
     @Override
@@ -215,16 +214,13 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
     @Override
     public void mousePressed(MouseEvent e) {
         startPoint = e.getPoint();
-        if (drawType == DRAW_TYPE.LINE) {
-            System.out.println("mouse pressed");
-            gImg.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY());
-            repaint();
-        }
+        sv.add(e.getPoint());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         endPoint = e.getPoint();
+        se.add(e.getPoint());
         int width = e.getX() - startPoint.x > 0 ? e.getX() - startPoint.x : startPoint.x - e.getX();
         int height = e.getY() - startPoint.y > 0 ? e.getY() - startPoint.y : startPoint.y - e.getY();
 
@@ -270,11 +266,13 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         if (e.getModifiersEx() != MouseEvent.BUTTON1_DOWN_MASK) return;
 
         if (drawType == DRAW_TYPE.PEN) {
-            gImg.drawLine(curPoint.x, curPoint.y, e.getX(), e.getY());
-
+            gImg.drawLine(curPoint.x, curPoint.y, e.getX(), e.getY()); // this statement must be precede before e.getPoint()
+            curPoint = e.getPoint();
+            repaint();
         } else if (drawType == DRAW_TYPE.LINE) {
 //            TODO: erase all afterimage after mouseReleased()
-//            gImg.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY());
+            endPoint = e.getPoint();
+            repaint();
         } else if (drawType == DRAW_TYPE.RECTANGLE) {
 //            gImg.drawRect(startPoint.x,startPoint.y,e.getX(),e.getY());
         } else if (drawType == DRAW_TYPE.OVAL) {
@@ -282,9 +280,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         } else if (drawType == DRAW_TYPE.CURVE) {
 //            gImg.drawArc(startPoint.x, startPoint.y, e.getX(), e.getY(), 0,120);
         }
-        curPoint.x = e.getX();
-        curPoint.y = e.getY();
-        repaint();
+
     }
 
     public void saveImage() {
@@ -300,7 +296,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
     }
 
     public void actionPerformed(ActionEvent e) {
-//        TODO: how can I separate actionHanlers?
+//        TODO: how can I separate actionHandlers?
         if (e.getActionCommand().equals("Clear")) {
             isClear = true;
         } else if (e.getActionCommand().equals("Save")) {
