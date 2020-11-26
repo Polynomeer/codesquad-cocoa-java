@@ -60,27 +60,27 @@ public class LedgerDAO {
         System.out.println("id \t\t date \t\t type \t\t summary \t revenue \t expenditure \t balance");
 
         if (sortBy == 0 && sortType == 0) {
-            selectAll();
+            select();
         }
         if (sortBy == 1) { // sort by date
             Collections.sort(ledgerList);
         }
         if (sortBy == 2) { // sort by revenue
             Collections.sort(ledgerList);
-            selectAll();
+            select();
         }
         if (sortBy == 3) { // sort by expenditure
             Collections.sort(ledgerList);
         }
     }
 
-    public void selectAll() {
+    public void select() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
         int balance = 0;
 
         for (LedgerVO ledger : ledgerList) {
             if (ledger == null) continue;
-            
+
             String date = simpleDateFormat.format(ledger.getDate());
             balance += ledger.getRevenue() - ledger.getExpenditure();
 
@@ -91,7 +91,7 @@ public class LedgerDAO {
 
     public void update(LedgerVO ledgerVO) throws IOException {
         // update in ArrayList, and rewrite to data file
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv", false));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv"));
         int idx = 0;
         for (LedgerVO ledger : ledgerList) { // find ledger which matches id
             if (ledger.getId() == ledgerVO.getId()) { // if id matches, update data
@@ -109,7 +109,7 @@ public class LedgerDAO {
     }
 
     public void delete(int id) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv", false));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv"));
         int idx = 0;
         for (LedgerVO ledger : ledgerList) { // find ledger which matches id
             if (ledger.getId() == id) { // if id matches, update data
