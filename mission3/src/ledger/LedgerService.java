@@ -23,12 +23,14 @@ public class LedgerService {
 
     public void process() throws IOException, ParseException {
         int index = 0;
+
         // get index from last line
         while (sc.hasNextLine()) {
             index = sc.nextLine().charAt(0) - '0';
         }
 
         sc = new Scanner(System.in);
+
         while (!LedgerMain.isExit) {
             System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
             System.out.println("\t\t" + username + "'s Financial Ledger");

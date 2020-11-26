@@ -7,8 +7,9 @@ public class LedgerMain {
     public static boolean isExit = false;
 
     public static void main(String[] args) throws IOException, ParseException {
-        UserService userService = new UserService();
-        String username = userService.process();
+//        UserService userService = new UserService();
+//        String username = userService.process();
+        String username = "august";
         LedgerService ledgerService = new LedgerService(username);
         ledgerService.process();
     }

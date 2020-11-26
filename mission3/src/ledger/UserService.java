@@ -67,12 +67,14 @@ public class UserService {
             String password = sc.next();
             userVO = new UserVO(username, password);
             boolean isValidUser = checkLogin(userVO);
+            sc.close();
         }
         if (option == 3) {
-            LedgerMain.isExit = true;
+            System.out.println("Ledger program exited...");
+            System.exit(0);
         }
 
-        sc.close();
+
         return userVO.getUsername();
     }
 
