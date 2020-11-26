@@ -3,10 +3,7 @@ package ledger;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 public class LedgerDAO {
 
@@ -65,18 +62,29 @@ public class LedgerDAO {
         System.out.println("⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤");
         System.out.println("id \t\t date \t\t type \t\t summary \t revenue \t expenditure \t balance");
 
-        if (sortBy == 0 && sortType == 0) {
+        if (sortBy == 1) { // sort by date
+            if (sortType == 'a') {
+                Collections.sort(ledgerList, Comparator.comparing((LedgerVO ledger) -> ledger).thenComparing(LedgerVO::getDate));
+            } else if (sortType == 'd') {
+                Collections.sort(ledgerList, Comparator.reverseOrder());
+            }
             select();
         }
-        if (sortBy == 1) { // sort by date
-            Collections.sort(ledgerList);
-        }
         if (sortBy == 2) { // sort by revenue
-            Collections.sort(ledgerList);
+            if (sortType == 'a') {
+                Collections.sort(ledgerList, Comparator.comparingInt(LedgerVO::getRevenue));
+            } else if (sortType == 'd') {
+                Collections.sort(ledgerList, (LedgerVO l1, LedgerVO l2) -> l2.getRevenue() - l1.getRevenue());
+            }
             select();
         }
         if (sortBy == 3) { // sort by expenditure
-            Collections.sort(ledgerList);
+            if (sortType == 'a') {
+                Collections.sort(ledgerList, Comparator.comparingInt(LedgerVO::getExpenditure));
+            } else if (sortType == 'd') {
+                Collections.sort(ledgerList, (LedgerVO l1, LedgerVO l2) -> l2.getExpenditure() - l1.getExpenditure());
+            }
+            select();
         }
     }
 
@@ -132,7 +140,7 @@ public class LedgerDAO {
         bw.close();
     }
 
-    private void calcBalance(){
+    private void calcBalance() {
         int balance = 0;
 
         for (LedgerVO ledger : ledgerList) {

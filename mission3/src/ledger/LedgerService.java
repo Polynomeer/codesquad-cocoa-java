@@ -83,19 +83,26 @@ public class LedgerService {
     }
 
     private void printData() {
-        System.out.print("Do you want to sort data? (Y/N)");
+        System.out.print("Do you want to sort data? (Y/N) : ");
         char choice = sc.next().charAt(0);
         choice = Character.toLowerCase(choice);
-        int sortBy = 0;
-        char sortType = 0;
+
         if (choice == 'y') {
-            System.out.print("Sort by 1. date 2. revenue 3. expenditure ? ");
+            int sortBy = 0;
+            char sortType = 0;
+
+            System.out.print("Sort by 1. date 2. revenue 3. expenditure ? : ");
             sortBy = sc.nextInt();
-            System.out.print("Ascending (A/a)? or Descending (D/d)? ");
+
+            System.out.print("Ascending (A/a)? or Descending (D/d)? : ");
             sortType = sc.next().charAt(0);
+
             sortType = Character.toLowerCase(sortType);
+            ledgerDAO.select(sortBy, sortType);
+
+        } else {
+            ledgerDAO.select();
         }
-        ledgerDAO.select(sortBy, sortType);
     }
 
     private void modifyData() throws IOException, ParseException {
