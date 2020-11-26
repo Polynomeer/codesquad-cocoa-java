@@ -45,6 +45,10 @@ public class LedgerVO implements Comparable<LedgerVO> {
         return expenditure;
     }
 
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return id + "," + date + "," + type + "," + summary + "," + revenue + "," + expenditure;

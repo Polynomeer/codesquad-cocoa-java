@@ -75,11 +75,16 @@ public class LedgerDAO {
     }
 
     public void selectAll() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        int balance = 0;
+
         for (LedgerVO ledger : ledgerList) {
-            int balance = 0;
             if (ledger == null) continue;
+            
+            String date = simpleDateFormat.format(ledger.getDate());
             balance += ledger.getRevenue() - ledger.getExpenditure();
-            System.out.println(ledger.getId() + "\t|\t" + ledger.getDate() + "\t|\t" + ledger.getType() + "\t|\t" +
+
+            System.out.println(ledger.getId() + "\t|\t" + date + "\t|\t" + ledger.getType() + "\t|\t" +
                     ledger.getSummary() + "\t|\t" + ledger.getRevenue() + "\t|\t" + ledger.getExpenditure() + "\t|\t" + balance);
         }
     }
@@ -99,6 +104,7 @@ public class LedgerDAO {
             bw.write(ledger.toString());
             bw.newLine();
         }
+        calcBalance();
         bw.close();
     }
 
@@ -116,7 +122,19 @@ public class LedgerDAO {
             bw.write(ledger.toString());
             bw.newLine();
         }
+        calcBalance();
         bw.close();
+    }
+
+    private void calcBalance(){
+        int balance = 0;
+
+        for (LedgerVO ledger : ledgerList) {
+            if (ledger == null) continue;
+
+            balance += ledger.getRevenue() - ledger.getExpenditure();
+            ledger.setBalance(balance);
+        }
     }
 
 }
