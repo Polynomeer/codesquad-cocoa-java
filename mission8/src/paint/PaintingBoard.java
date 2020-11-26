@@ -56,7 +56,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         repaint();
     }
 
-    private void addListeners(){
+    private void addListeners() {
         addMouseMotionListener(this); // 자기자신의 인스턴스를 Frame의 Listener로 등록한다.
         addMouseListener(this); // 자기자신의 인스턴스를 Frame의 MouseListener로 등록한다.
         addWindowListener(new WindowAdapter() {
@@ -213,21 +213,28 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
     public void mouseReleased(MouseEvent e) {
         endX = e.getX();
         endY = e.getY();
+        int width = e.getX() - startX > 0 ? e.getX() - startX : startX - e.getX();
+        int height = e.getY() - startY > 0 ? e.getY() - startY : startY - e.getY();
 
         if (drawType == DRAW_TYPE.LINE) {
             gImg.drawLine(startX, startY, e.getX(), e.getY());
             repaint();
         } else if (drawType == DRAW_TYPE.OVAL) {
-            gImg.drawOval(startX, startY, e.getX() - startX, e.getY() - startY);
+            if (startX < endX || startY < endY)
+                gImg.drawOval(startX, startY, width, height);
+            else if (startX > endX || startY > endY)
+                gImg.drawOval(endX, endY, width, height);
             repaint();
         } else if (drawType == DRAW_TYPE.RECTANGLE) {
-            gImg.drawRect(startX, startY, e.getX() - startX, e.getY() - startY);
+            if (startX < endX || startY < endY)
+                gImg.drawRect(startX, startY, width, height);
+            else if (startX > endX || startY > endY)
+                gImg.drawRect(endX, endY, width, height);
             repaint();
         } else if (drawType == DRAW_TYPE.CURVE) {
             gImg.drawArc(startX, startY, e.getX(), e.getY(), 0, 120);
             repaint();
         }
-
     }
 
     @Override
@@ -284,8 +291,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Clear")) {
             isClear = true;
-        }
-        else if(e.getActionCommand().equals("Save")){
+        } else if (e.getActionCommand().equals("Save")) {
             saveImage();
         }
         paint(gImg);
