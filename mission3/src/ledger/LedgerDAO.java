@@ -14,8 +14,10 @@ public class LedgerDAO {
     private File file;
     private Scanner sc;
     private SimpleDateFormat format;
+    private String username;
 
     public LedgerDAO(String username) throws FileNotFoundException, ParseException {
+        this.username = username;
         file = new File("./" + username + ".csv"); // create File instance
         sc = new Scanner(file); // read file by Scanner
         format = new SimpleDateFormat("yyyy-mm-dd");
@@ -48,7 +50,7 @@ public class LedgerDAO {
 
     public void insert(LedgerVO ledgerVO) throws ParseException {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv", true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("./" + username + ".csv"));
             bw.write(ledgerVO.toString());
             bw.newLine();
             bw.close();
@@ -95,7 +97,7 @@ public class LedgerDAO {
 
     public void update(LedgerVO ledgerVO) throws IOException {
         // update in ArrayList, and rewrite to data file
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + username + ".csv"));
         int idx = 0;
         for (LedgerVO ledger : ledgerList) { // find ledger which matches id
             if (ledger.getId() == ledgerVO.getId()) { // if id matches, update data
@@ -113,7 +115,7 @@ public class LedgerDAO {
     }
 
     public void delete(int id) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./august.csv"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + username + ".csv"));
         int idx = 0;
         for (LedgerVO ledger : ledgerList) { // find ledger which matches id
             if (ledger.getId() == id) { // if id matches, update data
