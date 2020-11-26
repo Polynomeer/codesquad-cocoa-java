@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 enum DRAW_TYPE {
@@ -16,13 +17,13 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
     private final int SHAPE_TYPE = 5;
     private DRAW_TYPE drawType = DRAW_TYPE.PEN;
 
-    private int x = 0;
-    private int y = 0;
-    private int startX = 0;
-    private int startY = 0;
-    private int endX = 0;
-    private int endY = 0;
+    Point curPoint = null;
+    Point startPoint = null;
+    Point endPoint = null;
     private boolean isClear = false;
+
+    Vector<Point> sv = new Vector<Point>(); // 시작
+    Vector<Point> se = new Vector<Point>(); // 끝점
 
     private Image img = null;
     private Graphics gImg = null;
@@ -192,6 +193,20 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         g.drawImage(img, 0, 0, this); // 가상화면에 그려진 그림을 Frame에 복사
     }
 
+    public void paintComponent(Graphics g) {
+        super.paint(g); // 부모 페인트호출
+
+        if (sv.size() != 0) {
+            for (int i = 0; i < se.size(); i++) { //벡터크기만큼
+                Point sp = sv.get(i); // 벡터값을꺼내다
+                Point ep = se.get(i);
+                g.drawLine(sp.x, sp.y, ep.x, ep.y);//그리다
+            }
+        }
+        if (startPoint != null)
+            g.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println("mouse clicked");
@@ -199,40 +214,37 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-        startX = e.getX();
-        startY = e.getY();
-
+        startPoint = e.getPoint();
         if (drawType == DRAW_TYPE.LINE) {
             System.out.println("mouse pressed");
-            gImg.drawLine(startX, startY, e.getX(), e.getY());
+            gImg.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY());
             repaint();
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        endX = e.getX();
-        endY = e.getY();
-        int width = e.getX() - startX > 0 ? e.getX() - startX : startX - e.getX();
-        int height = e.getY() - startY > 0 ? e.getY() - startY : startY - e.getY();
+        endPoint = e.getPoint();
+        int width = e.getX() - startPoint.x > 0 ? e.getX() - startPoint.x : startPoint.x - e.getX();
+        int height = e.getY() - startPoint.y > 0 ? e.getY() - startPoint.y : startPoint.y - e.getY();
 
         if (drawType == DRAW_TYPE.LINE) {
-            gImg.drawLine(startX, startY, e.getX(), e.getY());
+            gImg.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY());
             repaint();
         } else if (drawType == DRAW_TYPE.OVAL) {
-            if (startX < endX || startY < endY)
-                gImg.drawOval(startX, startY, width, height);
-            else if (startX > endX || startY > endY)
-                gImg.drawOval(endX, endY, width, height);
+            if (startPoint.x < endPoint.x || startPoint.y < endPoint.y)
+                gImg.drawOval(startPoint.x, startPoint.y, width, height);
+            else if (startPoint.x > endPoint.x || startPoint.y > endPoint.y)
+                gImg.drawOval(endPoint.x, endPoint.y, width, height);
             repaint();
         } else if (drawType == DRAW_TYPE.RECTANGLE) {
-            if (startX < endX || startY < endY)
-                gImg.drawRect(startX, startY, width, height);
-            else if (startX > endX || startY > endY)
-                gImg.drawRect(endX, endY, width, height);
+            if (startPoint.x < endPoint.x || startPoint.y < endPoint.y)
+                gImg.drawRect(startPoint.x, startPoint.y, width, height);
+            else if (startPoint.x > endPoint.x || startPoint.y > endPoint.y)
+                gImg.drawRect(endPoint.x, endPoint.y, width, height);
             repaint();
         } else if (drawType == DRAW_TYPE.CURVE) {
-            gImg.drawArc(startX, startY, e.getX(), e.getY(), 0, 120);
+            gImg.drawArc(startPoint.x, startPoint.y, e.getX(), e.getY(), 0, 120);
             repaint();
         }
     }
@@ -249,9 +261,8 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        x = e.getX();
-        y = e.getY();
-        location.setText(" Location : [" + x + ", " + y + "]");
+        curPoint = e.getPoint();
+        location.setText(" Location : [" + curPoint.x + ", " + curPoint.y + "]");
     }
 
     @Override
@@ -259,20 +270,20 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
         if (e.getModifiersEx() != MouseEvent.BUTTON1_DOWN_MASK) return;
 
         if (drawType == DRAW_TYPE.PEN) {
-            gImg.drawLine(x, y, e.getX(), e.getY());
+            gImg.drawLine(curPoint.x, curPoint.y, e.getX(), e.getY());
 
         } else if (drawType == DRAW_TYPE.LINE) {
 //            TODO: erase all afterimage after mouseReleased()
-//            gImg.drawLine(startX, startY, e.getX(), e.getY());
+//            gImg.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY());
         } else if (drawType == DRAW_TYPE.RECTANGLE) {
-//            gImg.drawRect(startX,startY,e.getX(),e.getY());
+//            gImg.drawRect(startPoint.x,startPoint.y,e.getX(),e.getY());
         } else if (drawType == DRAW_TYPE.OVAL) {
-//            gImg.drawOval(startX,startY,e.getX(),e.getY());
+//            gImg.drawOval(startPoint.x,startPoint.y,e.getX(),e.getY());
         } else if (drawType == DRAW_TYPE.CURVE) {
-//            gImg.drawArc(startX, startY, e.getX(), e.getY(), 0,120);
+//            gImg.drawArc(startPoint.x, startPoint.y, e.getX(), e.getY(), 0,120);
         }
-        x = e.getX();
-        y = e.getY();
+        curPoint.x = e.getX();
+        curPoint.y = e.getY();
         repaint();
     }
 
@@ -289,6 +300,7 @@ class PaintingBoard extends Frame implements MouseMotionListener, MouseListener,
     }
 
     public void actionPerformed(ActionEvent e) {
+//        TODO: how can I separate actionHanlers?
         if (e.getActionCommand().equals("Clear")) {
             isClear = true;
         } else if (e.getActionCommand().equals("Save")) {
